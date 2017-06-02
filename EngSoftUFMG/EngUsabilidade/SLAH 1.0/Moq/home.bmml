@@ -1,0 +1,150 @@
+<mockup version="1.0" skin="sketch" measuredW="1293" measuredH="754" mockupW="1024" mockupH="740">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="259" y="4" w="1024" h="740" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Living%20at%20home%20-%20World%20Cup%202014%0Ahttp%3A//www.lah.com.br</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::DataGrid" x="267" y="314" w="328" h="400" measuredW="329" measuredH="508" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <verticalScrollbar>true</verticalScrollbar>
+        <vLines>false</vLines>
+        <text>Data%2C%20Jogo%2C%20Cidade%2C%20Confirmado%21%0A17/06/11%2C%20BRA%20x%20ARG%2C%20BHZ%2C%20%5Bx%5D%0A17/06/11%2C%20RPC%20x%20CON%2C%20BHZ%2C%20%5B%5D%0A17/06/11%2C%20HOL%20x%20FRA%2C%20BHZ%2C%20%5B%5D%0A18/06/11%2C%20EUA%20x%20CHL%2C%20BHZ%2C%20%5B%5D%0A18/06/11%2C%20PAR%20x%20URU%2C%20BHZ%2C%20%5B%5D%0A18/06/11%2C%20MEX%20x%20ING%2C%20BHZ%2C%20%5B%5D%0A18/06/11%2C%20SUL%20x%20GUI%2C%20BHZ%2C%20%5B%5D%0A19/06/11%2C%20BRA%20x%20HOL%2C%20BHZ%2C%20%5Bx%5D%0A19/06/11%2C%20ARG%20x%20CON%2C%20BHZ%2C%20%5B%5D%0A19/06/11%2C%20JAP%20x%20ARG%2C%20BHZ%2C%20%5Bx%5D%0A19/06/11%2C%20EUA%20x%20MEX%2C%20BHZ%2C%20%5B%5D%0A20/06/11%2C%20MEX%20x%20PAR%2C%20BHZ%2C%20%5B%5D%0A20/06/11%2C%20FRA%20x%20GUI%2C%20BHZ%2C%20%5B%5D%0A20/06/11%2C%20RPC%20x%20USU%2C%20BHZ%2C%20%5B%5D%0A20/06/11%2C%20HOL%20x%20ING%2C%20BHZ%2C%20%5B%5D%0A20/06/11%2C%20BRA%20x%20CON%2C%20BHZ%2C%20%5B%5D</text>
+        <hLines>false</hLines>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::HelpButton" x="574" y="297" w="-1" h="-1" measuredW="18" measuredH="18" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_ajuda_game_tab%26bm%3Bhome_ajuda_game_tab.bmml%26bm%3Bhome_ajuda_game_tab.bmml%26bm%3Bhome_ajuda_game_tab.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22315%2C293%2C333%2C311%22%20href%3D%22home_ajuda_game_tab.bmml%22%20alt%3D%22home_ajuda_game_tab%22%20id%3D%2234%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::RoundButton" x="890" y="524" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%21</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Canvas" x="267" y="72" w="1016" h="32" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>0</color>
+        <borderColor>6710886</borderColor>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::LinkBar" x="917" y="479" w="-1" h="-1" measuredW="273" measuredH="25" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>home_mapa_onde_ficar%26bm%3Bhome_mapa_onde_ficar.bmml%26bm%3Bhome_mapa_onde_ficar.bmml%26bm%3Bhome_mapa_onde_ficar.bmml%2Chome_mapa_balada%26bm%3Bhome_mapa_balada.bmml%26bm%3Bhome_mapa_balada.bmml%26bm%3Bhome_mapa_balada.bmml%2Chome_mapa_turismo%26bm%3Bhome_mapa_turismo.bmml%26bm%3Bhome_mapa_turismo.bmml%26bm%3Bhome_mapa_turismo.bmml%2Chome_mapa_est%E1dio%26bm%3Bhome_mapa_est%E1dio.bmml%26bm%3Bhome_mapa_est%E1dio.bmml%26bm%3Bhome_mapa_est%E1dio.bmml</hrefs>
+        <text>Onde%20Ficar%2C%20Balada%2C%20Turismo%2C%20Jogos</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22658%2C475%2C734%2C500%22%20href%3D%22home_mapa_onde_ficar.bmml%22%20alt%3D%22home_mapa_onde_ficar%22%20id%3D%2237_0%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22754%2C475%2C800%2C500%22%20href%3D%22home_mapa_balada.bmml%22%20alt%3D%22home_mapa_balada%22%20id%3D%2237_1%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22820%2C475%2C872%2C500%22%20href%3D%22home_mapa_turismo.bmml%22%20alt%3D%22home_mapa_turismo%22%20id%3D%2237_2%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22892%2C475%2C931%2C500%22%20href%3D%22home_mapa_est%E1dio.bmml%22%20alt%3D%22home_mapa_est%E1dio%22%20id%3D%2237_3%22/%3E%0A</map>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Map" x="595" y="294" w="687" h="420" measuredW="252" measuredH="222" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="1213" y="74" w="-1" h="-1" measuredW="65" measuredH="28" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Entrar</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::TextInput" x="994" y="73" w="100" h="-1" measuredW="82" measuredH="29" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>carlos.silva</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="1101" y="73" w="100" h="-1" measuredW="49" measuredH="29" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5C*%5C*%5C*%5C*%5C*</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="271" y="75" w="-1" h="-1" measuredW="67" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_cadastro%26bm%3Bhome_cadastro.bmml%26bm%3Bhome_cadastro.bmml%26bm%3Bhome_cadastro.bmml</href>
+        <color>15790322</color>
+        <text>Cadastrar</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2212%2C71%2C79%2C96%22%20href%3D%22home_cadastro.bmml%22%20alt%3D%22home_cadastro%22%20id%3D%2211%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Tooltip" x="910" y="414" w="291" h="111" measuredW="165" measuredH="111" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <tooltipDirection>SW</tooltipDirection>
+        <text>Voc%EA%20est%E1%20aqui%21%0A%20%0ABelo%20Horizonte%20/%20MG</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::CoverFlow" x="762" y="104" w="516" h="190" measuredW="493" measuredH="198" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <value>50</value>
+        <verticalScrollbar>true</verticalScrollbar>
+        <src>./img/bra%2520x%2520arg.jpg</src>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="937" y="125" w="164" h="132" measuredW="11" measuredH="25" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_corner_slider%26bm%3Bhome_corner_slider.bmml%26bm%3Bhome_corner_slider.bmml%26bm%3Bhome_corner_slider.bmml</href>
+        <text>.</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22678%2C121%2C842%2C253%22%20href%3D%22home_corner_slider.bmml%22%20alt%3D%22home_corner_slider%22%20id%3D%2240%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextInput" x="293" y="177" w="328" h="-1" measuredW="316" measuredH="29" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>15790322</color>
+        <text>Digite%20aqui%20o%20jogo%20ou%20cidade%20que%20deseja%20localizar</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Title" x="293" y="115" w="-1" h="-1" measuredW="71" measuredH="62" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home%26bm%3Bhome.bmml%26bm%3Bhome.bmml%26bm%3Bhome.bmml</href>
+        <text>lah%21</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2234%2C111%2C105%2C173%22%20href%3D%22home.bmml%22%20alt%3D%22home%22%20id%3D%2219%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="897" y="76" w="92" h="24" measuredW="88" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>15790322</color>
+        <text>Ol%E1%20visitante%21</text>
+        <state>disabled</state>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Link" x="384" y="206" w="-1" h="-1" measuredW="145" measuredH="20" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Voc%EA%20est%E1%20em%20Belo%20Horizonte</text>
+        <size>10</size>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::HelpButton" x="529" y="207" w="-1" h="-1" measuredW="18" measuredH="18" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_ajuda_location_link%26bm%3Bhome_ajuda_location_link.bmml%26bm%3Bhome_ajuda_location_link.bmml%26bm%3Bhome_ajuda_location_link.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22270%2C203%2C288%2C221%22%20href%3D%22home_ajuda_location_link.bmml%22%20alt%3D%22home_ajuda_location_link%22%20id%3D%2222%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::HelpButton" x="1255" y="107" w="-1" h="-1" measuredW="18" measuredH="18" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_ajuda_corner_slider%26bm%3Bhome_ajuda_corner_slider.bmml%26bm%3Bhome_ajuda_corner_slider.bmml%26bm%3Bhome_ajuda_corner_slider.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22996%2C103%2C1014%2C121%22%20href%3D%22home_ajuda_corner_slider.bmml%22%20alt%3D%22home_ajuda_corner_slider%22%20id%3D%2223%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="270" y="338" w="304" h="374" measuredW="11" measuredH="25" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>.</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Button" x="621" y="177" w="-1" h="-1" measuredW="68" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>home_mapa_onde_ficar%26bm%3Bhome_mapa_onde_ficar.bmml%26bm%3Bhome_mapa_onde_ficar.bmml%26bm%3Bhome_mapa_onde_ficar.bmml</href>
+        <text>Buscar%21</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22362%2C173%2C430%2C201%22%20href%3D%22home_mapa_onde_ficar.bmml%22%20alt%3D%22home_mapa_onde_ficar%22%20id%3D%2220%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TabBar" x="267" y="268" w="328" h="448" measuredW="386" measuredH="100" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <verticalScrollbar>false</verticalScrollbar>
+        <text>Meus%20Jogos%2C%20Onde%20vou%20ficar%2C%20Locais%20Favoritos</text>
+        <selectedIndex>0</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Link" x="533" y="296" w="-1" h="-1" measuredW="36" measuredH="20" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <href>hoome_grid_jogos_edit%26bm%3Bhoome_grid_jogos_edit.bmml%26bm%3Bhoome_grid_jogos_edit.bmml%26bm%3Bhoome_grid_jogos_edit.bmml</href>
+        <text>Editar</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22274%2C292%2C310%2C312%22%20href%3D%22hoome_grid_jogos_edit.bmml%22%20alt%3D%22hoome_grid_jogos_edit%22%20id%3D%2231%22/%3E</map>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

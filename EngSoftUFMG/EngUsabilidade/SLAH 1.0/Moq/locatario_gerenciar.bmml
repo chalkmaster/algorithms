@@ -1,0 +1,137 @@
+<mockup version="1.0" skin="sketch" measuredW="1293" measuredH="754" mockupW="1024" mockupH="740">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="259" y="4" w="1024" h="740" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Living%20at%20home%20-%20World%20Cup%202014%0Ahttp%3A//www.lah.com.br</text>
+      </controlProperties>
+    </control>
+    <control controlID="66" controlTypeID="com.balsamiq.mockups::Button" x="1177" y="172" w="-1" h="-1" measuredW="84" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>processar</text>
+      </controlProperties>
+    </control>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::RadioButton" x="784" y="128" w="65" h="33" measuredW="65" measuredH="22" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>cr%E9dito</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Canvas" x="267" y="72" w="1016" h="32" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>0</color>
+        <borderColor>6710886</borderColor>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::TextInput" x="854" y="131" w="256" h="-1" measuredW="105" measuredH="29" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Numero%20Cart%E3o</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::TextInput" x="1118" y="131" w="-1" h="-1" measuredW="49" measuredH="29" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Digito</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="1213" y="74" w="-1" h="-1" measuredW="48" measuredH="28" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>sair</text>
+      </controlProperties>
+    </control>
+    <control controlID="64" controlTypeID="com.balsamiq.mockups::ComboBox" x="609" y="132" w="161" h="-1" measuredW="79" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Usu%E1rio</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::TextInput" x="614" y="165" w="156" h="-1" measuredW="90" measuredH="29" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Num%20de%20dias</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::TextInput" x="614" y="240" w="639" h="-1" measuredW="73" measuredH="29" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Descri%E7%E3o</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="1121" y="76" w="92" h="24" measuredW="68" measuredH="25" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>15790322</color>
+        <text>Ol%E1%20carlos</text>
+        <state>disabled</state>
+      </controlProperties>
+    </control>
+    <control controlID="77" controlTypeID="com.balsamiq.mockups::Map" x="619" y="388" w="628" h="248" measuredW="252" measuredH="222" zOrder="21" locked="false" isInGroup="-1"/>
+    <control controlID="78" controlTypeID="com.balsamiq.mockups::TextInput" x="613" y="316" w="639" h="-1" measuredW="222" measuredH="29" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Limita%E7%F5es%2C%20restri%E7%F5es%20e%20costumes</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::TextInput" x="855" y="164" w="189" h="-1" measuredW="111" measuredH="29" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Nome%20no%20Cartao</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::DateChooser" x="1055" y="166" w="-1" h="-1" measuredW="114" measuredH="29" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>vencimento</text>
+      </controlProperties>
+    </control>
+    <control controlID="76" controlTypeID="com.balsamiq.mockups::TextInput" x="613" y="281" w="639" h="-1" measuredW="87" measuredH="29" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Alimenta%E7%E3o</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::RadioButton" x="784" y="160" w="65" h="33" measuredW="61" measuredH="22" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Debito</text>
+      </controlProperties>
+    </control>
+    <control controlID="79" controlTypeID="com.balsamiq.mockups::TextInput" x="614" y="352" w="638" h="-1" measuredW="68" measuredH="29" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>endere%E7o</text>
+      </controlProperties>
+    </control>
+    <control controlID="80" controlTypeID="com.balsamiq.mockups::Button" x="1184" y="668" w="-1" h="-1" measuredW="61" measuredH="28" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>salvar</text>
+        <bold>false</bold>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TabBar" x="267" y="104" w="328" h="612" measuredW="365" measuredH="100" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <verticalScrollbar>false</verticalScrollbar>
+        <text>Ocupa%E7%E3o%2C%20Pagamentos%2C%20galeria%20multimidia</text>
+        <selectedIndex>0</selectedIndex>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Link" x="533" y="296" w="-1" h="-1" measuredW="36" measuredH="20" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <href>hoome_grid_jogos_edit%26bm%3Bhoome_grid_jogos_edit.bmml%26bm%3Bhoome_grid_jogos_edit.bmml%26bm%3Bhoome_grid_jogos_edit.bmml</href>
+        <text>Editar</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22274%2C292%2C310%2C312%22%20href%3D%22hoome_grid_jogos_edit.bmml%22%20alt%3D%22hoome_grid_jogos_edit%22%20id%3D%2231%22/%3E</map>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::DataGrid" x="267" y="129" w="328" h="585" measuredW="334" measuredH="148" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <vLines>false</vLines>
+        <verticalScrollbar>true</verticalScrollbar>
+        <text>Data%2C%20usu%E1rio%2C%20Cidade%2C%20Confirmado%21%0A17/06/11%2C%20Augusto%20Silva%2C%20BHZ%2C%20%5Bx%5D%0A18/06/11%2C%20Phrederich%2C%20BHZ%2C%20%5B%5D%0A19/06/11%2C%20Marcelle%20Hauns%2C%20BHZ%2C%20%5Bx%5D%0A20/06/11%2C%20Petric%20Rioiz%2C%20BHZ%2C%20%5B%5D</text>
+        <hLines>false</hLines>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="270" y="338" w="304" h="374" measuredW="11" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>.</text>
+      </controlProperties>
+    </control>
+    <control controlID="62" controlTypeID="com.balsamiq.mockups::FieldSet" x="605" y="206" w="663" h="504" measuredW="200" measuredH="170" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Dados%20da%20acomoda%E7%E3o</text>
+      </controlProperties>
+    </control>
+    <control controlID="63" controlTypeID="com.balsamiq.mockups::FieldSet" x="602" y="106" w="666" h="100" measuredW="200" measuredH="170" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Processar%20pagamento</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

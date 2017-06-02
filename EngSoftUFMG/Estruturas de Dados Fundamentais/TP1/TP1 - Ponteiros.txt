@@ -1,0 +1,28 @@
+Charles Wellington de Oliveira Fortes
+Estrutura de Dados Fundamentais
+
+Trabalho Prático 1 - Ponteiros
+
+Solução:
+
+"Próximo" de 1 aponta para 15 - resulta em: (0->23->15->1->15->1->15...)
+"Próximo" de 23 aponta para 1 - resulta em: (0->23->1->15->1->15...)
+"Próximo" de 15 aponta para 23 - resulta em: (0->23->1->15->23->1...)
+"Próximo" de 0 aponta para 1 - resulta em: (0->1->15->23->1...)
+"Próximo" de 23 aponta para nil - resulta em: (0->1->15->23->nil)
+
+Pascal:
+
+	(((inicio^.prox)^.prox)^.prox)^.prox = (inicio^.prox)^.prox;
+	(inicio^.prox)^.prox = ((inicio^.prox)^.prox)^.prox;
+	(((inicio^.prox)^.prox)^.prox)^.prox = inicio^.prox;
+	inicio^.prox = (inicio^.prox)^.prox;
+	(((inicio^.prox)^.prox)^.prox)^.prox = nil;
+
+Java:
+
+        inicio.prox.prox.prox.prox = inicio.prox.prox;        
+        inicio.prox.prox = inicio.prox.prox.prox;
+        inicio.prox.prox.prox.prox = inicio.prox;
+        inicio.prox = inicio.prox.prox;
+        inicio.prox.prox.prox.prox = null;

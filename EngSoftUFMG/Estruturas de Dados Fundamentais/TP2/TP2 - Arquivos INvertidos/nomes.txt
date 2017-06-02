@@ -1,0 +1,40 @@
+Abecê Nogueira;1100100101;22;M;Rua a, 1
+Acheropita Papazone;2200200202;23;F;Rua b, 2
+Adegesto Pataca;3300300303;25;M;Rua a, 2
+Aeronauta Barata;4400400404;27;F;Rua b, 3
+Agr¡cola Beterraba;5500500505;32;F;Rua a, 3
+Addae;6600600606;55;F;Rua b, 4
+Antoniozin Fogata;7700700707;39;M;Rua a, 4
+Argonauta Sucupira;8800800808;87;M;Rua b, 5
+Aricléia Café Chá;9900900909;83;F;Rua a, 5
+Cólica de Jesus;1100100102;71;F;Rua b, 6
+Conadura Ferreira Mole;1210110111;26;F;Rua a, 6
+Creosméria Emansueta;1320120121;36;F;Rua b, 7
+Crisoprasso Compasso;1430130131;46;M;Rua a, 7
+David Leão Pão Trigo;1540140141;66;M;Rua b, 8
+Del¡cia Costa Melo;1650150151;22;F;Rua a, 8
+Diana Soppa;1760160161;23;F;Rua b, 9
+Divina Anunciação;1870170171;25;F;Rua a, 9
+Dominador das Dores;1980180181;27;M;Rua b, 10
+Edna Boa Sorte;2090190191;32;F;Rua a, 10
+Elacervandro Gomes;2200200201;55;M;Rua b, 11
+Eliene Bubina;2310210211;39;F;Rua a, 11
+Emerson Capaz;2420220221;87;M;Rua b, 12
+Eneas;2530230231;83;M;Rua a, 12
+Eneas;2640240241;71;M;Rua b, 13
+Espere em Deus Mateus;2750250251;26;M;Rua a, 13
+Espermatocleide;2860260261;36;F;Rua b, 14
+Espe Bola Gorda;2970270271;46;F;Rua a, 14
+Frigobar Beneditino;3080280281;66;M;Rua b, 15
+Galenogal de Silva;3190290291;22;M;Rua a, 15
+Luiz Rêgo Grande;3300300301;23;M;Rua b, 16
+Luzitano Mêndes Cristo;3410310311;25;M;Rua a, 16
+Manoel de Hora Pontual;3520320321;27;M;Rua b, 17
+Oceano Pac¡fico;3630330331;32;M;Rua a, 17
+Olinda Barba de Jesus,;3740340341;55;F;Rua b, 18
+Orlando Modesto Pinto;3850350351;39;M;Rua a, 18
+Orquerio Cassapietra;3960360361;87;M;Rua b, 19
+Otávio Bundasseca;4070370371;83;M;Rua a, 19
+Serdeberão dos Anjos;4180380381;71;M;Rua b, 20
+Telesforo Veras;4290390391;26;M;Rua a, 20
+Tertuliano Firgufino;4400400401;36;M;Rua b, 21

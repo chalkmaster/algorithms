@@ -1,0 +1,22 @@
+Tarefa 1) Localizar o Jogo que você deseja (Brasil vs Argentina)
+Não usou o corner
+Tarefa 2) Se localizar no Mapa em relação ao estádio
+Não localizou-se no mapa em relação ao estádio, localizou onde se hospedar
+Tarefa 3) Localizar onde se hospedar para ver o Jogo
+Tarefa 4) Usar a barra de busca para localizar onde se hospedar
+OK
+Tarefa 5) Localizar lazer na cidade (boates, pontos turisticos)
+Turismo OK
+Balada OK
+Tarefa 6) Conferir seus jogos selecionados
+Não usou botão de editar, usou os cheks do grid
+Editar foi segunda opção, mas fez com sucesso
+Tarefa 7) Você gostou do software, agora se cadastre para salvar as escolhas
+OK
+
+
+Não entendeu a dela de edição, não questionou corner que ela nunca usou.
+
+Medir tempo para acesso
+Dificuldade de localizar recurso
+Numero de erros

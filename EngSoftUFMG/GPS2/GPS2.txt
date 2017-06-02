@@ -1,0 +1,67 @@
+-> Para definir o nível de complexidade das telas, foram dados pontos para cada elemento gráfico encontrado no sistema (cada componente gráfico, como label, caixa de entrada, etc, recebeu uma pontuação única).
+Desta forma, a complexidade da tela pode ser obtida somando-se a complexidade de cada elemento que a compõe.
+-> Para melhor caracterização do problema e facilidade de medição, os pontos referentes de acesso a dados foram agrupados nas telas ao qual pertencem (foram utilizados).
+-> A complexidade de uma tela (já incluindo o custo de consumo de dados) é a soma de todos os elementos que ela utiliza.
+-> As pontuações foram seguidas conforme definido abaixo:
+
+Parametros de pontuação definidos:
+	-> Campo de entrada simples: 1pt
+	-> Campo de entrada com máscara de entrada: 2pts
+	-> Campo de entrada com validação (tendo ou não máscara) : 3pt
+	-> Campo de entrada com lookup: 10pts
+	-> label: 1pt
+	-> Acesso a Dados: 20 pts (pois contempla camada de acesso, configuração de sgbd, etc...)
+	-> validação de regra de negócio ou segurança: 5pts
+	-> exibição de dados de relatório: 30 pts (pois compreende paginações, N campos, etc...)
+	
+Pontos de Objetos para Sistema de Urna Eletrônica
+	Resumo:
+		Total de Pontos: 272
+		Total de Telas: 7 telas somando 102 pontos de objeto
+		Total de interação de acesso a dados: 7 interações de dados somando 140 pontos de objeto
+		Total de Relatórios: 1 relatório somando 30 pontos de objeto
+	
+	
+	Detalhamento das pontuações:
+		- Telas
+			- 1 Iniciar Eleição: 29
+				- Um campo de entrada de texto com mascara: 2
+				- Dois Labels: 2
+				- um acesso acesso a dados para validar senha: 20
+				- uma validação de segurança/negocio: 5
+			- 2 Entrada de Título de Eleitor: 38
+				- Um campo com validação de máscara numerica: 2
+				- um label: 1
+				- um acesso a dados para recuperar os dados do eleitor: 20
+				- uma validacao de regra de negocio para verificar o dígito verificador do titulo antes de acessar os dados: 5
+				- uma validação sobre a validade da sessao (aberta na tela 1 ao se fornecer a senha): 5
+				- uma validação sobre se a eleição já foi encerrada ou não: 5
+			- 3 Confirmação de Eleitor Informado: 14
+				- seis labels: 6
+				- um campo com validação de entrada (permite apenas S e N): 3
+				- uma validacao de regra de negocio: 5
+			- 4 Entrada de voto de candidato (será usada a mesma para todos os candidatos): 39
+				- dois labels: 2
+				- uma caixa de entrada com mascara numerica: 2
+				- um acesso a dados para recuperar os dados do candidato: 20
+				- validação de regra de negocio para validar voto branco: 5
+				- validação de regra de negocio para validar qual repositório de dados acessar baseado no momento da votação (presidente, senador, governador): 5
+				- validação de qual a próxima interação a seguir (se vai acessar o próximo candidato ou se vai encerrar a validação): 5
+			- 5 Confirmação de voto (será usada a mesma para todos os candidatos) : 16
+				- 8 labels: 8
+				- um campo com validação de entrada (permite apenas S e N): 3
+				- uma validação de regra de negócio: 5
+			- 6 Tela de confirmação de votação: 7
+				- dois labels: 2
+				- uma validação de regra de negocio (para voltar a tela inicial da votação - tela 2): 5				
+			- 7 Tela de confirmação de encerramento das eleições: 39
+				- dois labels: 2
+				- uma validação de regra de negocio: 5
+				- um campo com mascara de entrada: 2
+				- um acesso a banco de dados para validar a senha: 20
+				- uma validação de regra de negócio para encerrar a eleição: 5
+				- uma validação de regra de negócio para analisar a continuidade do fluxo (se encerra a eleição ou se volta a tela de entrada de eleitor - tela 2): 5
+		- Relatórios: 90
+			- Conclusão da votação: 
+				- tres acesso a dados, totalizando os itens de cada etapa da votação (presidente, governador e senador): 60
+			Exibição de relatorio: 30
