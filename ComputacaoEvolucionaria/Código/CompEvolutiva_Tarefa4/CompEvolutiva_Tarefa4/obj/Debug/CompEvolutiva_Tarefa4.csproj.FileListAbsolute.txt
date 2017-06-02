@@ -1,0 +1,6 @@
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\bin\Debug\CompEvolutiva_Tarefa4.exe.config
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\bin\Debug\CompEvolutiva_Tarefa4.exe
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\bin\Debug\CompEvolutiva_Tarefa4.pdb
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\obj\Debug\CompEvolutiva_Tarefa4.csprojResolveAssemblyReference.cache
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\obj\Debug\CompEvolutiva_Tarefa4.exe
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutiva_Tarefa4\CompEvolutiva_Tarefa4\obj\Debug\CompEvolutiva_Tarefa4.pdb

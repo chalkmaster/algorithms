@@ -1,0 +1,70 @@
+-----------------------------
+Métodos de Avaliação
+	Agregação de Objetivos
+		Soma ponderada dos objetivos
+			Vantagens: 
+				Simplicidade de Implementação
+				Pode ser utilizada em técnicas tradicionais de otimização
+			Desvantagens:
+				Fraca Performance
+				Exige conhecimento específico para definição dos pesos
+				Requer que as avaliações sejam normalizadas
+	Estratégia de Pareto
+		Compara Soluções sem comparar avaliações
+		Conceito de dominancia
+		Define-se o conceito de pareto ótimo o conjunto de soluções que não são dominadas por nenhuma outra solução
+		Qualquer que seja o criterio de avaliação sempre a melhor estará neste conjunto
+		Avaliação baseada no numero de individuos que ela domina
+			Vantagens
+				Não exige normalização
+			Desvantagens
+				Pode não orientar a solução no sentido desejado				
+	Minimização de Energia	
+		Agregação Adaptativa
+		Atualiza os pesos automaticamente
+		Pesos maiores para quem é menos satisfatório
+		Objetivo de minimizar todos os pesos
+		Incorpora as especificações dos usuários
+		Calculo de erro:
+			diferença do peso do usuário e a avaliação no tempo
+		Calculo de energia:
+			Diminui conforme a avaliação chega do objetivo
+		Vantagens
+			Mais simples que pareto
+			Adapta o problema em runtime
+			Bom para sistemas eletronicos
+		Desvantagens
+			Exige normalização
+			Pode Provocar Especification
+			requer um valor target para cada objetivo
+			O melhor individuo de uma geração pode não ser mais na proxima pela atualização da avaliação
+	Minimização da Distancia do Objetivo
+		Avalia uma solução calculando a distancia do objeto com a especificação do usuário
+		Soluções com baixo desempenho são penalizadas
+------------------------
+Objetivo
+	Encontrar o soluções o mais próximo possível da fronteira de pareto
+	Encontrar soluções espaçadas (Diversidade)
+	Privilegiar funções que preencham regiões menos densas
+------------------------
+Principais Algoritmos MultiObjetivos
+	VEGA -> Primeiro para encontrar soluções não dominadas
+		Se divide em N vetores, cada um avalia sobre uma função
+		Não permite encontrar muita diversidade
+	MOGA
+		Usa Ranking
+		Os não dominados ficam na frente e os dominados são penalizados
+		Também usa a ideia de nichos
+	NGPA
+	NSGA
+		Distribui em frentes não dominadas
+		Atribui melhor aptidão a frentes não dominadas
+		Os mais bem avaliados se reproduzem mais que os outros
+		Avaliação de Densidade
+	NSGA-II
+		Passa a avaliar a distancia de aglomeração
+		É Elitista
+		Inicia a população com N Individuos aleatoreos, se aplicam os operadores basicos
+		
+		
+(Seleção Recombinação e Mutação)

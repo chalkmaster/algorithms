@@ -1,0 +1,7 @@
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\obj\Debug\Tarefa2.csprojResolveAssemblyReference.cache
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\bin\Debug\Tarefa2.dll
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\bin\Debug\Tarefa2.pdb
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\bin\Debug\CompEvolutivaTarefa2.exe
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\bin\Debug\CompEvolutivaTarefa2.pdb
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\obj\Debug\Tarefa2.dll
+E:\Dropbox\Dropbox\Cursos\Mestrado CEFET\Computação Evolucionária\Código\CompEvolutivaTarefa2\Tarefa2\obj\Debug\Tarefa2.pdb
