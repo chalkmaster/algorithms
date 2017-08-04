@@ -68,7 +68,9 @@ module.exports = class genService {
         let workload = fitnessScores.workload - plan.task.workload;
         let nullUserPenalty = !plan.user ? 0 : fitnessScores.user;
         let nullToolPenalty = !plan.tool ? 0 : fitnessScores.tool;
-        let remaningTime = plan.user && plan.user.workload < -2 ? Math.abs(plan.user.workload) : fitnessScores.userRemaningTime;
+        
+        let userWorkload = plan.user ? plan.user.getWorkload() : 0;
+        let remaningTime = userWorkload < -2 ? Math.abs(userWorkload) : fitnessScores.userRemaningTime;
 
         let fitness = maxScore;
         fitness -= timeDiff;
@@ -122,8 +124,8 @@ module.exports = class genService {
 
             if (task.requiredSkill) {
                 for (var i = 0; i < resources.users.length; i++) {
-                    if (resources.users[i].skills.indexOf(task.requiredSkill) != -1 && resources.users[i].workload - task.workload > -2) {
-                        resources.users[i] = attachUserTask(resources.users[i], task)
+                    if (resources.users[i].skills.indexOf(task.requiredSkill) != -1 && resources.users[i].workCapacity - task.workload > -2) {
+                        resources.users[i].attachTask(task);
                         planUser = resources.users[i];
                         break;
                     }
@@ -131,26 +133,7 @@ module.exports = class genService {
             }
             return { planTool, planUser };
         }
-        //TODO: Passar para as classes
-        //=====================================================
-        function attachUserTask(user, task) {
-            if (!task || !user) return;
 
-            user.tasks.push(task);
-            user.workload -= task.workload;
-
-            return user;
-        }
-
-        function detachUserTask(user, task) {
-            if (!task || !user) return;
-
-            const taskPosition = user.tasks.findIndex(t => t.code === task.code);
-            user.tasks.splice(taskPosition, 1);
-            user.workload += task.workload;
-
-            return user;
-        }
     }
 
 
