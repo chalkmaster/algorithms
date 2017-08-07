@@ -12,3 +12,13 @@
 **sugestão
 - identificar que um problema baixo deve ser feito agora porque se deixar pra depois ele gera um problema mais grave
 - sugerir substituição de recurso (seja pessoa ou ferramenta) em decorrencia de possível ganho de desempenho quando usa ela
+- recurso pouco utilizado
+
+**
+- http://burakkanber.com/blog/machine-learning-in-other-languages-introduction/
+- https://www.burakkanber.com/blog/machine-learning-genetic-algorithms-part-1-javascript/
+
+
+** 
+https://github.com/dolphin278/genetic
+https://github.com/subprotocol/genetic-js/blob/master/js/genetic-0.1.14.js

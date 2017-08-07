@@ -43,17 +43,26 @@ module.exports = class resourceService {
     }
 
     initializeTasks() {
-        this.tasks.push(new Task('tsk-1', new Date(2017, 7, 1), criticalityKind.HIGH, 2, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-2', new Date(2017, 7, 15), criticalityKind.HIGH, 4, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-3', new Date(2017, 7, 31), criticalityKind.HIGH, 6, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-4', new Date(2017, 7, 1), criticalityKind.MEDIUM, 3, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-5', new Date(2017, 7, 12), criticalityKind.MEDIUM, 1, toolsKind.SCREWDRIVER, skillKind.MECHANIC));
-        this.tasks.push(new Task('tsk-6', new Date(2017, 7, 17), criticalityKind.MEDIUM, 2, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-7', new Date(2017, 7, 29), criticalityKind.LOW, 4, toolsKind.SCREWDRIVER, skillKind.MECHANIC));
-        this.tasks.push(new Task('tsk-8', new Date(2017, 7, 30), criticalityKind.LOW, 6, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-9', new Date(2017, 7, 1), criticalityKind.LOW, 1, toolsKind.SCREWDRIVER, skillKind.WOODWORKER));
-        this.tasks.push(new Task('tsk-10', new Date(2017, 7, 30), criticalityKind.MEDIUM, 1, toolsKind.SCREWDRIVER, skillKind.MECHANIC));
+        //cria 50 OS's aleatóreas na memória
+        for (let i = 0; i < 50; i++) {
+            const criticalityRamdom = getRandom(0, 3);
+            const toolRamdom = getRandom(1, 10);
+            const skillRamdom = getRandom(0, 3);
+
+            const taskCode = 'tsk-' + i.toString();
+            const taskDate = new Date(2017, 7, getRandom(1, 30));
+            const taskCriticality = criticalityRamdom == 1 ? criticalityKind.HIGH : (criticalityRamdom == 2 ? criticalityKind.MEDIUM : criticalityKind.LOW);
+            const taskTool = toolRamdom % 2 == 0 ? toolsKind.SCREWDRIVER : toolsKind.HAMMER;
+            const taskSkill = skillKind === 1 ? skillKind.WOODWORKER : (skillKind === 2 ? skillKind.MECHANIC : skillKind.ELETRONICS);
+
+            this.tasks.push(new Task(taskCode, taskDate, taskCriticality, getRandom(1, 6), taskTool, taskSkill));
+        }
+
         this.tasks = this.getTasksSortedByCriticality();
+
+        function getRandom(min, max) {
+            return Math.floor(min + ((Math.random() * (Math.abs(min) + max)) + 1));
+        }
     }
 
     getTasksSortedByCriticality() {

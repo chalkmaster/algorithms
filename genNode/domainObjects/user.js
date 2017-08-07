@@ -19,9 +19,9 @@ module.exports = class User {
     }
 
     getWorkload(){
-        let total = 0;
+        let total = this.workCapacity;
         for(let task of this.tasks)
-            total += task.workload;
+            total -= task.workload;
         return total;
     }
 
@@ -41,4 +41,5 @@ module.exports = class User {
 
         return this;
     }
+    
 };
