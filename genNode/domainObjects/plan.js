@@ -26,10 +26,10 @@ module.exports = class plan {
         return date;
     }
 
-            /**
+    /**
      * O quão saldável é o indivíduo
      */
-    getFitness(){
+    ComputeFitness(){
         const delayPenalty = 30;
         const lowCriticalityPenalty = 30;
         const workOverloadPenalty = 30;
@@ -37,24 +37,25 @@ module.exports = class plan {
         const invalidTaskPenalty = 100;
         const invalidToolPenalty = 100;
 
-        let fitness = 0;
+        let penaltySum = 0;
 
         if (this.user)
-            fitness += this.user.getRemaningWorkCapacity() < -1 ? workOverloadPenalty : 0;
+            penaltySum += this.user.getRemaningWorkCapacity() < -1 ? workOverloadPenalty : 0;
         else
-            fitness += invalidUserPenalty;
+            penaltySum += invalidUserPenalty;
 
         if (this.task) {
-            fitness += delayPenalty - Math.min(dateHelper.daysDiffAbs(this.getPlanDate(), this.task.createdAt), delayPenalty);
-            fitness += this.task.criticality === criticalityKind.HIGH ? 0 : this.task.criticality === criticalityKind.MEDIUM ? 15 : 30;
+            penaltySum += delayPenalty - Math.min(dateHelper.daysDiffAbs(this.getPlanDate(), this.task.createdAt), delayPenalty);
+            penaltySum += this.task.criticality === criticalityKind.HIGH ? 0 : this.task.criticality === criticalityKind.MEDIUM ? 15 : 30;
         }
         else
-            fitness += invalidTaskPenalty;
+            penaltySum += invalidTaskPenalty;
 
         if (!this.tool)
-            fitness += invalidToolPenalty;
+            penaltySum += invalidToolPenalty;
 
-        return fitness;
+        this.fitness = penaltySum;
+        return this.fitness;
     }
 
     /**

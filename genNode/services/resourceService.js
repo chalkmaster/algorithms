@@ -1,9 +1,12 @@
 const mathHelper = require('../helpers/mathHelper');
-const toolsKind = require('../domainObjects/toolsKind');
-const skillKind = require('../domainObjects/skillKind');
+
 const criticalityKind = require('../domainObjects/criticalityKind');
+const skillKind = require('../domainObjects/skillKind');
+const toolsKind = require('../domainObjects/toolsKind');
+
 const User = require('../domainObjects/user');
 const Task = require('../domainObjects/task');
+const Tool = require('../domainObjects/tool');
 
 module.exports = class resourceService {
     constructor() {
@@ -17,16 +20,56 @@ module.exports = class resourceService {
     /**
      * @returns {User[]}
      */
-    getUsers(){
+    getUsers() {
         return this.users;
     }
 
     /**
      * @returns {Task[]}
      */
-    getTasks(){
+    getTasks() {
         return this.tasks;
     }
+
+    /**
+     * @returns {Tool[]}
+     */
+    getTools(){
+        return this.tools;
+    }
+
+    /**
+     * retornas todas as tarefas que necessitam as habilidades do usuário e que ainda cabem na fila dele
+     * @param {User} user 
+     * @param {String[]} tasksToSkip Lista de códigos para ignorar
+     */
+    getTasksByUserSkills(user, tasksToSkip = []) {
+        return this.getTasks().filter((t) => {
+            return user.skills.indexOf(t.requiredSkill) != -1 && user.getRemaningWorkCapacity() - t.workload > -2 && tasksToSkip.indexOf(t.code) == -1;
+        });
+    }
+
+    /**
+     * retorna tarefas que não requerem nenhuma habildiade especial
+     * @param {number} maxWorkload tempo máximo previsto de uma tarefa
+     * @param {String[]} tasksToSkip  Lista de códigos para ignorar
+     */
+    getTasksWithoutRequiredSkill(maxWorkload = 8, tasksToSkip = []) {
+        return this.getTasks().filter((t) => {
+            return (!t.requiredSkill || t.requiredSkill == '') && maxWorkload > t.workload && tasksToSkip.indexOf(t.code) == -1;
+        });
+    }
+
+    /**
+     * recupera a ferramenta necessário para uma task
+     * @param {Task} task 
+     */
+    getToolsByType(kind) {
+        return this.getTools().filter((t) => {
+            return kind === t.type;
+        });
+    }
+
     initialize() {
         this.initializeTools();
         this.initializeUsers();
@@ -34,18 +77,9 @@ module.exports = class resourceService {
     }
 
     initializeTools() {
-        this.tools.push({
-            code: 'CF1',
-            type: toolsKind.SCREWDRIVER,
-        });
-        this.tools.push({
-            code: 'CF2',
-            type: toolsKind.SCREWDRIVER,
-        });
-        this.tools.push({
-            code: 'M1',
-            type: toolsKind.HAMMER,
-        });
+        this.tools.push(new Tool('CF1',toolsKind.SCREWDRIVER));
+        this.tools.push(new Tool('CF2', toolsKind.SCREWDRIVER));
+        this.tools.push(new Tool('M1', toolsKind.HAMMER));
     }
 
     initializeUsers() {
