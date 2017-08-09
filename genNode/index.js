@@ -11,7 +11,7 @@ app.get('/tasks', (req, resp) => {
     let val = service.computePopulationFitness(initialPopulation);    
     resp.json(val);
     resp.end();
-})
+});
 
 app.listen(8080, () => {
     console.log(`I'm alive!`);

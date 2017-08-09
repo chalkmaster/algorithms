@@ -1,3 +1,4 @@
+const mathHelper = require('../helpers/mathHelper');
 const toolsKind = require('../domainObjects/toolsKind');
 const skillKind = require('../domainObjects/skillKind');
 const criticalityKind = require('../domainObjects/criticalityKind');
@@ -13,6 +14,19 @@ module.exports = class resourceService {
         this.initialize();
     }
 
+    /**
+     * @returns {User[]}
+     */
+    getUsers(){
+        return this.users;
+    }
+
+    /**
+     * @returns {Task[]}
+     */
+    getTasks(){
+        return this.tasks;
+    }
     initialize() {
         this.initializeTools();
         this.initializeUsers();
@@ -45,24 +59,21 @@ module.exports = class resourceService {
     initializeTasks() {
         //cria 50 OS's aleatóreas na memória
         for (let i = 0; i < 50; i++) {
-            const criticalityRamdom = getRandom(0, 3);
-            const toolRamdom = getRandom(1, 10);
-            const skillRamdom = getRandom(0, 3);
+            const criticalityRamdom = mathHelper.getRandomInt(1, 3);
+            const toolRamdom = mathHelper.getRandomInt(1, 10);
+            const skillRamdom = mathHelper.getRandomInt(1, 3);
 
             const taskCode = 'tsk-' + i.toString();
-            const taskDate = new Date(2017, 7, getRandom(1, 30));
+            const taskDate = new Date(2017, 7, mathHelper.getRandomInt(1, 30));
             const taskCriticality = criticalityRamdom == 1 ? criticalityKind.HIGH : (criticalityRamdom == 2 ? criticalityKind.MEDIUM : criticalityKind.LOW);
             const taskTool = toolRamdom % 2 == 0 ? toolsKind.SCREWDRIVER : toolsKind.HAMMER;
-            const taskSkill = skillKind === 1 ? skillKind.WOODWORKER : (skillKind === 2 ? skillKind.MECHANIC : skillKind.ELETRONICS);
+            const taskSkill = skillRamdom == 1 ? skillKind.WOODWORKER : (skillRamdom == 2 ? skillKind.MECHANIC : skillKind.ELETRONICS);
 
-            this.tasks.push(new Task(taskCode, taskDate, taskCriticality, getRandom(1, 6), taskTool, taskSkill));
+            this.tasks.push(new Task(taskCode, taskDate, taskCriticality, mathHelper.getRandomInt(1, 6), taskTool, taskSkill));
         }
 
         this.tasks = this.getTasksSortedByCriticality();
 
-        function getRandom(min, max) {
-            return Math.floor(min + ((Math.random() * (Math.abs(min) + max)) + 1));
-        }
     }
 
     getTasksSortedByCriticality() {
@@ -70,4 +81,4 @@ module.exports = class resourceService {
             return a.criticality > b.criticality ? 1 : a.criticality < b.criticality ? -1 : 0;
         });
     }
-}
+};

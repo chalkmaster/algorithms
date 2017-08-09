@@ -2,8 +2,6 @@ const toolsKind = require('../domainObjects/toolsKind');
 const skillKind = require('../domainObjects/skillKind');
 const criticalityKind = require('../domainObjects/criticalityKind');
 
-const task = require('./task');
-
 module.exports = class Task {
     /**
      * 
@@ -21,5 +19,10 @@ module.exports = class Task {
         this.workload = workload;
         this.requiredTool = requiredTool;
         this.requiredSkill = requiredSkill;
+        this.user = {};
+    }
+
+    attachUser(taskUser){
+        this.user = taskUser;
     }
 };

@@ -1,19 +1,28 @@
 const criticalityKind = require('../domainObjects/criticalityKind');
 const resourceService = require('./resourceService');
+const dateHelper = require('../helpers/dateHelper');
+const Plan = require('../domainObjects/plan');
 
 module.exports = class genService {
     constructor() {
         this.resources = new resourceService();
         this.config = {
-            workingDays: 7
-        }
+            workingDays: 7,
+            workingHours: 8,
+            populationSize: 100,
+            maxGenerations: 100,
+            elitism: 0.1,
+        };
     }
 
+    /**
+     * @returns {resourceService}
+     */
     getResources() {
         return this.resources;
     }
 
-    run(config) {
+    run() {
         let population = this.generateInitialPopulation();
         let generationSnapshots = [];
         let lastGeneration = {
@@ -24,9 +33,9 @@ module.exports = class genService {
         if (lastGeneration.fitness == 0)
             return lastGeneration;
 
-        for (let i = 0; i < config.maxGenerations; i++) {
-            let selection = this.select(population)
-            let decents = makeCrossOver(selection);
+        for (let i = 0; i < this.config.maxGenerations; i++) {
+            let selection = this.select(population);
+            let decents = this.makeCrossOver(selection);
             population = mutate(decents);
 
             let currentPopulationFitness = computePopulationFitness(population);
@@ -44,105 +53,82 @@ module.exports = class genService {
         return lastGeneration;
     }
 
-    select (population){
-        let selected = [];
+    /**
+     * 
+     * @param {Plan[]} population 
+     */
+    makeCrossOver(population) {
+        let decents = [];
+        const elit = this.config.populationSize * this.config.elitism;
 
-        return selected;
-    }
-    computePopulationFitness(population) {
-        const daysToDistribute = this.config.workingDays;
-        //avalia para cada dia
-        let totalFitness = 0;
-
-        for (var day = 0; day < daysToDistribute; day++) {
-            let daySelection = population.filter((i) => { return i.plan.day === day });
-            for (let individual of daySelection) {
-                let hourFault = false;
-                let toolConflict = false;
-
-                //Conflito de horario do usuário
-                if (individual.plan.user) {
-                    let tasksSameHour = population.filter((i) => {
-                        return i.plan.user
-                            && i.plan.user.code === individual.plan.user.code
-                            && (i.plan.hour >= individual.plan.hour && i.plan.hour + i.plan.task.workload <= individual.plan.hour)
-                    });
-                    hourFault = tasksSameHour.length > 0;
-                }
-
-                //Conflito de ferramenta                
-                if (individual.plan.tool) {
-                    let toolSameHour = population.filter((i) => {
-                        return i.plan.tool
-                            && i.plan.tool.code === individual.plan.tool.code
-                            && (i.plan.hour >= individual.plan.hour && i.plan.hour + i.plan.task.workload <= individual.plan.hour)
-                    });
-                    toolConflict = toolSameHour.length > 0;
-                }
-
-                if (hourFault)
-                    individual.fitness += 30;
-
-                if (toolConflict)
-                    individual.fitness += 30;
-
-                totalFitness += individual.fitness;
-            }
+        for (let i = 0; i < elit; i += 2) {
+            //decents
         }
-        let sortedPopulation = population.sort((a,b)=>{ return a.fitness > b.fitness ? 1 : -1; });
-        return {populationFitness: totalFitness, population: sortedPopulation};
+
+        for (let i = 0; i < this.config.populationSize - elit; i += 2) {
+            let pair1 = population[i];
+            //let pair2 = 
+        }
     }
 
     /**
-     * O quaão saldável é o indivíduo
-     * @param {*} plan 
+     * 
+     * @param {Plan[]} population 
      */
-    computePlanFitness(plan) {
-        const fitnessScores = {
-            oldFactor: 7.2,
-            highCriticality: 3,
-            workload: 16,
-            user: 99,
-            tool: 99,
-            userRemaningTime: 2,
-        };
-
-        const maxScore = fitnessScores.oldFactor
-            + fitnessScores.highCriticality
-            + fitnessScores.workload
-            + fitnessScores.user
-            + fitnessScores.tool
-            + fitnessScores.userRemaningTime
-            ;
-
-        let timeDiff = fitnessScores.oldFactor - Math.min(Math.abs(this.getBaseDate(plan) - plan.task.createdAt) / 36e5 / 100, fitnessScores.oldFactor);
-        let criticality = plan.task.criticality === criticalityKind.HIGH ? 3 : plan.task.criticality === criticalityKind.MEDIUM ? 2 : 0;
-        let workload = fitnessScores.workload - plan.task.workload;
-        let nullUserPenalty = !plan.user ? 0 : fitnessScores.user;
-        let nullToolPenalty = !plan.tool ? 0 : fitnessScores.tool;
-
-        let userWorkload = plan.user ? plan.user.getWorkload() : 0;
-        let remaningTime = userWorkload < -2 ? Math.abs(userWorkload) : fitnessScores.userRemaningTime;
-
-        let fitness = maxScore;
-        fitness -= timeDiff;
-        fitness -= criticality;
-        fitness -= workload;
-        fitness -= nullUserPenalty;
-        fitness -= nullToolPenalty;
-        fitness -= remaningTime;
-
-        return fitness;
+    select(population) {
+        let selected = [];
+        for (var i = 0; i < this.config.populationSize / 2; i++) {
+            selected.push(population[i]);
+        }
+        return [...population];
     }
 
-    getBaseDate(plan) {
-        let baseDate = new Date();
-        let day = baseDate.getDate();
-        let hour = baseDate.getHours();
-        baseDate.setDate(day + plan.day);
-        baseDate.setHours(hour + plan.intialHour);
-        return baseDate;
+    /**
+     * Avalia a população
+     * @param {[]} population 
+     */
+    computePopulationFitness(population) {
+        // //filters
+        // const byDay = (i) => { return i.plan.day === day; };
+        // const byIntersectionTime = (i) => { return i.plan.user && i.plan.user.code === individual.plan.user.code && (i.plan.hour >= individual.plan.hour && i.plan.hour + i.plan.task.workload <= individual.plan.hour);};
+        // const by = (i) => {
+        //                 return i.plan.tool
+        //                     && i.plan.tool.code === individual.plan.tool.code
+        //                     && (i.plan.hour >= individual.plan.hour && i.plan.hour + i.plan.task.workload <= individual.plan.hour);
+        //             };
+        // //avalia para cada dia
+        // let totalFitness = 0;
+        // for (var day = 0; day < this.config.workingDays; day++) {
+        //     let daySelection = population.filter(byDay);
+        //     for (let individual of daySelection) {
+        //         let hourFault = false;
+        //         let toolConflict = false;
+
+        //         //Conflito de horario do usuário
+        //         if (individual.plan.user) {
+        //             let tasksSameHour = population.filter(byIntersectionTime);
+        //             hourFault = tasksSameHour.length > 0;
+        //         }
+
+        //         //Conflito de ferramenta                
+        //         if (individual.plan.tool) {
+        //             let toolSameHour = population.filter();
+        //             toolConflict = toolSameHour.length > 0;
+        //         }
+
+        //         if (hourFault)
+        //             individual.fitness += 30;
+
+        //         if (toolConflict)
+        //             individual.fitness += 30;
+
+        //         totalFitness += individual.fitness;
+        //     }
+        // }
+        // let sortedPopulation = population.sort((a, b) => { return a.fitness > b.fitness ? 1 : -1; });
+        // return { populationFitness: totalFitness, population: sortedPopulation };
     }
+
 
     /**
      * inicializa uma populção válida
@@ -151,32 +137,26 @@ module.exports = class genService {
      * @param {Number} populationSize 
      */
     generateInitialPopulation(populationSize) {
+        const resources = this.getResources();
+
         let population = [];
-        for (let day = 0; day < this.config.workingDays; day++) {
-            for (let i = 0; i < Math.ceil(populationSize / this.config.workingDays); i++) {
-                const validPlan = this.getValidPlan(day);
-                
-                if (!validPlan)
+        let totalHours = this.config.workingDays * this.config.workingHours;
+
+        for (let hour = 0; hour < totalHours; hour++) {
+            for (let user of resources.users) {
+                const userPlan = this.getValidPlanForUser(user);
+                if (!userPlan)
                     break;
 
-                population.push({
-                    plan: validPlan,
-                    fitness: this.computePlanFitness(validPlan),
-                });
-                if (population.length >= populationSize)
-                    break;
+                userPlan.adjusteHourByPosition(hour);
+                population.push(userPlan);
             }
-            if (population.length >= populationSize)
-                break;
-
-            //reinicia os resources para o dia seguinte
-            if (this.resources.tasks.length == 0)
-                break;
-
-            let tasks = this.resources.tasks;
-            this.resources = new resourceService();
-            this.resources.tasks = tasks;
         }
+        const notPlanedTasks = resources.getTasks().filter((t) => {return !t.user;});
+        
+        for(let task of notPlanedTasks)
+            population.push(new Plan(task));
+
         return population;
     }
 
@@ -184,60 +164,61 @@ module.exports = class genService {
      * Inicializa um indivíduo válido
      * TODO: adicionar recurso para tentar inicializar já com cenários que deram certo no passado.
      */
-    getValidPlan(planDay) {
+    getValidPlanForUser(planUser) {
         const resources = this.getResources();
-        const planTask = resources.tasks.shift();
-        if (!planTask)
+        let tasksToSkip = [];
+
+        if (!planUser)
             return;
 
-        let { planTool, planUser } = getTaskPlan(planTask);
-        let workDelta = planUser ? (planUser.workCapacity - planUser.getWorkload()) : 0;
+        let { planTool, planTask } = getTaskPlan(planUser);
 
-        return {
-            day: planDay, //gen
-            intialHour: 8 + workDelta - planTask.workload, //gen 
-            task: planTask, //meta-info
-            tool: planTool, //gen
-            user: planUser, //gen
-        };
 
-        function getTaskPlan(task) {
+        return new Plan(package, planUser, planTool);
+
+        function getTaskPlan(user) {
             let planTool = null;
-            let planUser = null;
+            let planTask = null;
 
-            if (task.requiredTool) {
-                for (var i = 0; i < resources.tools.length; i++) {
-                    if (task.requiredTool === resources.tools[i].type) {
-                        planTool = resources.tools[i];
-                        resources.tools.splice(i, 1);
-                        break;
-                    }
+            let tasksPerSkill = resources.tasks.filter((t) => {
+                return user.skills.indexOf(t.requiredSkill) != -1 //requer a habilidade do usuário
+                    && user.getRemaningWorkCapacity() - t.workload > -2 //não sobrecarrega o usuário mais de 2h
+                    && tasksToSkip.indexOf(t.code) == -1 //não está atribuido a nenhum usuário
+                    ;
+            });
+
+            if (tasksPerSkill && tasksPerSkill.length > 0) {
+                planTask = tasksPerSkill[0];
+            } else {
+                let simpleTasks = resources.tasks.filter((t) => {
+                    return (!t.requiredSkill || t.requiredSkill == '') //não requer a habilidade do usuário
+                        && user.getRemaningWorkCapacity() - t.workload > -2 //não sobrecarrega o usuário mais de 2h
+                        && tasksToSkip.indexOf(t.code) == -1 //não está atribuido a nenhum usuário
+                        ;
+                });
+                if (simpleTasks && simpleTasks.length > 0) {
+                    planTask = simpleTasks[0];
                 }
             }
 
-            if (task.requiredSkill) {
-                for (var i = 0; i < resources.users.length; i++) {
-                    if (resources.users[i].skills.indexOf(task.requiredSkill) != -1 && resources.users[i].getWorkload() - task.workload > -2) {
-                        resources.users[i].attachTask(task);
-                        planUser = resources.users[i];
-                        break;
+            if (planTask) {
+                user.attachTask(planTask);
+                planTask.attachUser(user);
+
+                tasksToSkip.push(planTask.code);
+
+                if (planTask.requiredTool) {
+                    for (var i = 0; i < resources.tools.length; i++) {
+                        if (planTask.requiredTool === resources.tools[i].type) {
+                            planTool = resources.tools[i];
+                            resources.tools.splice(i, 1);
+                            break;
+                        }
                     }
                 }
             }
-            return { planTool, planUser };
+            return { planTool, planTask };
         }
 
     }
-
-
-    //TODO: Passar para um helper
-    //=====================================================
-    /**
-     * 
-     * @param {Number} min valor mínimo que pode ser retornado
-     * @param {number} max valor máximo que pode ser retornado
-     */
-    getRandom(min, max) {
-        return Math.floor(min + ((Math.random() * (Math.abs(min) + max)) + 1));
-    }
-}
+};
