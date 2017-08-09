@@ -19,10 +19,10 @@ module.exports = class Task {
         this.workload = workload;
         this.requiredTool = requiredTool;
         this.requiredSkill = requiredSkill;
-        this.user = {};
+        this.user = '';
     }
 
     attachUser(taskUser){
-        this.user = taskUser;
+        this.user = taskUser.code;
     }
 };

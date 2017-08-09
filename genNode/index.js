@@ -7,9 +7,8 @@ app.use(express.static('public'));
 
 app.get('/tasks', (req, resp) => {
     let service = new GenService();
-    let initialPopulation = service.generateInitialPopulation(50);
-    let val = service.computePopulationFitness(initialPopulation);    
-    resp.json(val);
+    let initialPopulation = service.getInitialPopulation();
+    resp.json(initialPopulation);
     resp.end();
 });
 

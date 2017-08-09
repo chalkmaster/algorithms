@@ -1,3 +1,7 @@
+const dateHelper = require('../helpers/dateHelper');
+
+const criticalityKind = require('../domainObjects/criticalityKind');
+
 const Task = require('./task');
 const Tool = require('./toolsKind');
 const User = require('./user');
@@ -63,6 +67,8 @@ module.exports = class plan {
      * @param {Number} planPosition 
      */
     adjusteHourByPosition(planPosition){
-        this.hour = planPosition + this.user.workCapacity - (validPlan.task.workload + user.getRemaningWorkCapacity());
+        if (!this.task || !this.user)
+            return;
+        this.hour = planPosition + this.user.workCapacity - (this.task.workload + this.user.getRemaningWorkCapacity());
     }
 };
