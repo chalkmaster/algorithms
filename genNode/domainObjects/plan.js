@@ -79,7 +79,7 @@ module.exports = class plan {
         }
 
 
-        this.fitness = penaltySum;
+        this.fitness = 345 - penaltySum;
         this.reason = this.getReason();
         return this.fitness;
     }

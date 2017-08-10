@@ -92,7 +92,7 @@ module.exports = class resourceService {
 
     initializeTasks() {
         //cria 50 OS's aleatóreas na memória
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 50; i++) {
             const criticalityRamdom = mathHelper.getRandomInt(1, 3);
             const toolRamdom = mathHelper.getRandomInt(1, 10);
             const skillRamdom = mathHelper.getRandomInt(1, 3);
@@ -107,7 +107,6 @@ module.exports = class resourceService {
         }
 
         this.tasks = this.getTasksSortedByCriticality();
-
     }
 
     getTasksSortedByCriticality() {

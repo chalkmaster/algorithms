@@ -42,14 +42,15 @@ module.exports = class GeneticFactory {
         }
         const notPlanedTasks = resources.getTasks().filter((t) => { return !t.user; });
 
-        for (let task of notPlanedTasks){
+        for (let task of notPlanedTasks) {
             let notPlanedPlan = new Plan(task);
             notPlanedPlan.adjusteHourByPosition(totalHours);
             notPlanedPlan.computeFitness();
             planList.push(notPlanedPlan);
         }
 
-        let planning = new Planning(planList);
+        //FIX: Não precisa pra versão final, só pra ajudar na hora de analisar na tela
+        let planning = new Planning(planList.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; }));
         planning.computeFitness();
         return planning;
     }

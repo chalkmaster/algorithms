@@ -31,10 +31,12 @@ module.exports = class Planning {
             });
             const hasConcurrency = concurrentPlans && concurrentPlans.length > 0;
 
-            if (!plan.user || hasConcurrency)
-                plan.fitness *= 2;
+            let penalty = 0;
 
-            totalFitness += plan.fitness;
+            if (!plan.user || hasConcurrency)
+                penalty = plan.fitness / 2;
+
+            totalFitness += (plan.fitness - penalty);
         }
         this.fitness = totalFitness;
         return this.fitness;
