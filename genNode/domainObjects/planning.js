@@ -18,9 +18,16 @@ module.exports = class Planning {
 
         for (let plan of this.planList) {
             const concurrentPlans = this.planList.filter((p) => {
-                if (!p.user || !p.task || !plan.tool || !plan.user || !plan.task)
-                    return false;
-                return (p.user.code == plan.user.code || p.tool.code == plan.tool.code) && (p.hour >= plan.hour || p.hour < (plan.hour + plan.task.workload));
+                let result = false;
+                if (p.hour >= plan.hour && p.hour < (plan.hour + (plan.task ? plan.task.workload : 0))) {
+                    if (plan.user && p.user)
+                        if (p.user.code == plan.user.code)
+                            result = true;
+                    if (plan.tool && p.tool)
+                        if (p.tool.code == plan.tool.code)
+                            result = true;
+                }
+                return result;
             });
             const hasConcurrency = concurrentPlans && concurrentPlans.length > 0;
 

@@ -92,13 +92,13 @@ module.exports = class resourceService {
 
     initializeTasks() {
         //cria 50 OS's aleatóreas na memória
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
             const criticalityRamdom = mathHelper.getRandomInt(1, 3);
             const toolRamdom = mathHelper.getRandomInt(1, 10);
             const skillRamdom = mathHelper.getRandomInt(1, 3);
 
             const taskCode = 'tsk-' + i.toString();
-            const taskDate = new Date(2017, 7, mathHelper.getRandomInt(1, 30));
+            const taskDate = new Date(2017, 6, mathHelper.getRandomInt(1, 30));
             const taskCriticality = criticalityRamdom == 1 ? criticalityKind.HIGH : (criticalityRamdom == 2 ? criticalityKind.MEDIUM : criticalityKind.LOW);
             const taskTool = toolRamdom % 2 == 0 ? toolsKind.SCREWDRIVER : toolsKind.HAMMER;
             const taskSkill = skillRamdom == 1 ? skillKind.WOODWORKER : (skillRamdom == 2 ? skillKind.MECHANIC : skillKind.ELETRONICS);

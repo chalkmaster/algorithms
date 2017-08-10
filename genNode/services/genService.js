@@ -23,7 +23,7 @@ class Generation {
 module.exports = class genService {
     constructor() {
         this.config = {
-            workingDays: 7,
+            workingDays: 3,
             workingHours: 8,            
             populationSize: 2,
             maxGenerations: 100,
