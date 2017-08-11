@@ -28,13 +28,21 @@ module.exports = class GeneticFactory {
 
         let planList = [];
         let totalHours = this.config.workingDays * this.config.workingHours;
+        
+        //FIX Só pra poc
+        resources.users = [];
+        resources.initializeUsers();
+        resources.getTasks().forEach((t) => {t.user = null;});
+        //FIX Só pra poc
+
 
         for (let hour = 0; hour < totalHours; hour++) {
             for (let user of resources.users) {
-                const userPlan = this.buildValidPlanForUser(user);
+                let userPlan = this.buildValidPlanForUser(user);
                 if (!userPlan)
-                    break;
+                    userPlan = new Plan(null, user, null);
 
+                userPlan.id = `U${user.code}${hour}`;
                 userPlan.adjusteHourByPosition(hour);
                 userPlan.computeFitness();
                 planList.push(userPlan);
@@ -44,6 +52,7 @@ module.exports = class GeneticFactory {
 
         for (let task of notPlanedTasks) {
             let notPlanedPlan = new Plan(task);
+            notPlanedPlan.id = `T${task.code}`;
             notPlanedPlan.adjusteHourByPosition(totalHours);
             notPlanedPlan.computeFitness();
             planList.push(notPlanedPlan);
@@ -92,7 +101,7 @@ module.exports = class GeneticFactory {
 
             if (possibleTools && possibleTools.length > 0) {
                 const drawn = mathHelper.getRandomInt(0, possibleTools.length - 1);
-                planTool = possibleTools;
+                planTool = possibleTools[drawn];
             }
 
             planedTasks.push(planTask.code);

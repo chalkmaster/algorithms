@@ -1,4 +1,5 @@
 const GeneticFactory = require('../geneticFactory');
+const resourcesService = require('../services/resourceService');
 const Planning = require('../domainObjects/planning');
 const mathHelper = require('../helpers/mathHelper');
 
@@ -26,11 +27,11 @@ module.exports = class genService {
         this.config = {
             workingDays: 3,
             workingHours: 8,
-            populationSize: 5,
+            populationSize: 100,
             maxGenerations: 100,
-            elitism: 0.2,
-            crossover: 0.3,
-            mutation: 0.03,
+            elitism: 0.4,
+            crossover: 0.1,
+            mutation: 0.1,
         };
         this.geneticFactory = new GeneticFactory(this.config);
     }
@@ -52,13 +53,9 @@ module.exports = class genService {
             previousGeneration = currentGeneration;
             currentGeneration = new Generation(newPopulation);
 
-            /*FIX: só pra ajudar a testar, vou armazenar só o fitness por enquanto
-             * na vesão nem precisa do snapshot se não quiser
-             * */
-            //this.reduce(previousGeneration).then((g) => generationsSnapshot.push(g));
             generationsSnapshot.push(previousGeneration.fitness);
 
-            if (currentPopulationFitness == 0)
+            if (currentGeneration.fitness == 0)
                 break;
         }
 
@@ -66,30 +63,12 @@ module.exports = class genService {
         return generationsSnapshot;
     }
 
-    /**
-     * 
-     * @param {Generation} generation 
-     */
-    reduce(generation) {
-        return new Promise((resolve, reject) => {
-            for (let planning of generation.population) {
-                for (let plan of planning.planList) {
-                    if (plan.user)
-                        plan.user = plan.user.code;
-                    if (plan.tool)
-                        plan.tool = plan.tool.code;
-                    if (plan.task)
-                        plan.task = plan.task.code;
-                }
-            }
-            resolve(generation);
-        });
-    }
-
     getInitialPopulation() {
         let population = [];
         for (let i = 0; i < this.config.populationSize; i++) {
-            population.push(this.geneticFactory.buildPlanning());
+            let planning = this.geneticFactory.buildPlanning();
+            planning.id = i;
+            population.push(planning);
         }
         return population.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; });
     }
@@ -100,62 +79,66 @@ module.exports = class genService {
      */
     makeCrossOver(generation) {
         let decents = [];
-        const elit = this.config.populationSize * this.config.elitism;
-        const crossover = this.config.populationSize * this.config.crossover;
 
-        for (let i = 0; i < elit; i++)
+        const elit = Math.ceil(this.config.populationSize * this.config.elitism);
+
+        for (let i = 0; i < elit; i++) {
+            generation.population[i].id = i;
             decents.push(generation.population[i]);
+        }
 
         for (let i = 0; i < this.config.populationSize - elit; i += 2) {
-            let p1 = this.rouletSelection(generation);
-            let p2 = this.rouletSelection(generation); //FIX: Melhorar colocando pra não cruzar com ele mesmo, pra isso precisa colocar um ID no planejamento
-            let f1 = Array(this.config.populationSize);
-            let f2 = Array(this.config.populationSize);
+            const p1 = this.rouletSelection(generation);
+            let p2 = p1;
+
+            while (p1.id == p2.id)
+                p2 = this.rouletSelection(generation);
+
+            const planSize = p1.planList.length;
+            const crossover = planSize * this.config.crossover;
+
+            let f1 = Array(planSize);
+            let f2 = Array(planSize);
             let pattern = [];
 
-            //FIX: da pra reduzir o numero de for
-            for (let j = 0; j < this.config.populationSize; j++)
-                pattern.push(0);
-
             for (let j = 0; j < crossover; j++) {
-                let draw = mathHelper.getRandomInt(0, this.config.populationSize - 1);
-                pattern[draw] = 1;
+                let drawn = mathHelper.getRandomInt(0, planSize - 1);
+                pattern[drawn] = 1;
             }
 
-            for (let j = 0; j < this.config.populationSize; j++) {
-                if (pattern[j] == 0) continue;
-
-                f1[j] = p2.planList[j];
-                f2[j] = p1.planList[j];
-            }
-
-            for (let j = 0; j < this.config.populationSize; j++) {
-                if (pattern[j] == 1) continue;
+            for (let j = 0; j < planSize; j++) {
+                if (pattern[j] == 1) {
+                    f1[j] = p2.planList[j];
+                    f2[j] = p1.planList[j];
+                    continue;
+                }
 
                 let index = 0;
 
-                while (f1.findIndex((p) => { return p.code == p1[index].code; }) != -1)
+                while (index < planSize - 1 && f1.findIndex((p) => { return p && p1.planList[index] && p.id == p1.planList[index].id; }) != -1)
                     index++;
 
-                f1[j] = p1[index];
+                f1[j] = p1.planList[index];
 
                 index = 0;
 
-                while (f1.findIndex((p) => { return p.code == p2[index].code; }) != -1)
+                while (index < planSize - 1 && f2.findIndex((p) => { return p && p2.planList[index] && p.id == p2.planList[index].id; }) != -1)
                     index++;
 
-                f2[j] = p2[index];
+                f2[j] = p2.planList[index];
             }
 
-            let decent1 = new Planning(f1.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; }));
-            let decent2 = new Planning(f2.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; }));
+            let decent1 = new Planning(f1);
+            let decent2 = new Planning(f2);
 
-            decent1.computeFitness();
-            decent2.computeFitness();
+            decent1.id = i + decents.length;
+            decent2.id = decent1.id + 1;
 
             decents.push(decent1);
             decents.push(decent2);
         }
+        this.adjustTime(decents);
+        return decents;
     }
 
     /**
@@ -167,12 +150,15 @@ module.exports = class genService {
         let roulet = generation.population.map((p, i) => { return { index: i, probability: p.fitness / generation.fitness }; })
             .sort((a, b) => { return a.probability > b.probability ? 1 : -1; });
 
+        roulet.splice(0, roulet.length / 2);
+
         roulet.forEach((value, index) => {
-            value.probability *= index * 100;
+            value.probability = Math.ceil(value.probability * 100);
+            value.probability += value.probability * (index * index);
         });
 
-        let drawNumber = mathHelper.getRandomInt(0, roulet[roulet.length - 1].probability);
-        let selected = roulet.find((value) => { return value.probability > drawNumber; });
+        const drawnNumber = mathHelper.getRandomInt(0, roulet[roulet.length - 1].probability - 1);
+        const selected = roulet.find((value) => { return value.probability >= drawnNumber; });
         return generation.population[selected.index];
     }
 
@@ -182,20 +168,103 @@ module.exports = class genService {
      */
     mutate(population) {
         for (let planning of population) {
-            let draw = mathHelper.getRandom();
-            if (draw < this.config.mutation) {
-                let pos1 = mathHelper.getRandomInt(0, this.config.populationSize -1);
-                let pos2 = 0;
-                do{
-                    pos2 = mathHelper.getRandomInt(0, this.config.populationSize -1);
-                } while (pos1 == pos2);
+            const drawn = mathHelper.getRandom();
 
-                let temp = planning.planList[pos1];
-                planning.planList[pos1] = planning.planList[pos2];
-                planning.planList[pos2] = temp;
-                planning.computeFitness();
+            if (this.config.mutation < drawn) continue;
+
+            const positionOrData = mathHelper.getRandomInt(0, 9) % 2;
+
+            if (positionOrData == 1)
+                this.mutatePosition(planning);
+            else
+                this.mutateData(planning);
+
+            planning.computeFitness();
+        }
+        return population.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; });
+    }
+
+    /**
+     * 
+     * @param {Planning} planning 
+     */
+    mutatePosition(planning) {
+        let pos1 = 0;
+        let pos2 = pos1;
+
+        do {
+            pos1 = mathHelper.getRandomInt(0, planning.planList.length - 1);
+        } while(!planning.planList[pos1]);
+
+        do {
+            pos2 = mathHelper.getRandomInt(0, planning.planList.length - 1);
+        } while (!planning.planList[pos2] || pos2 == pos1);
+
+        let temp = planning.planList[pos1].hour;
+        planning.planList[pos1].hour = planning.planList[pos2].hour;
+        planning.planList[pos2].hour = temp;
+    }
+
+    /**
+     * 
+     * @param {Planning} planning 
+     */
+    mutateData(planning) {
+
+        const resources = new resourcesService();
+        const toolOrTask = mathHelper.getRandomInt(0, 9) % 2;
+
+        let planIndex = 0;
+        do { 
+            planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
+        } while(!planning.planList[planIndex])
+
+        if (toolOrTask == 1) {
+            while (!planning.planList[planIndex] || !planning.planList[planIndex].task)
+                planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
+
+            const possibleTools = resources.getToolsByType(planning.planList[planIndex].task.requiredTool);
+
+            if (possibleTools && possibleTools.length > 0) {
+                const i = mathHelper.getRandomInt(0, possibleTools.length - 1);
+                planning.planList[planIndex].tool = possibleTools[i];
+            }
+        } else {
+            while (!planning.planList[planIndex] || !planning.planList[planIndex].user)
+                planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
+
+            const possibleTasks = resources.getTasksByUserSkills(planning.planList[planIndex].user)
+                .concat(resources.getTasksWithoutRequiredSkill(8));
+
+            if (possibleTasks && possibleTasks.length > 0) {
+                const taskIndex = mathHelper.getRandomInt(0, possibleTasks.length - 1);
+                planning.planList[planIndex].task = possibleTasks[taskIndex];
             }
         }
-        return population;
+        planning.planList[planIndex].computeFitness();
+    }
+
+    /**
+     * 
+     * @param {Planning[]} population 
+     */
+    adjustTime(population) {
+        let totalHours = this.config.workingDays * this.config.workingHours;
+        let control = [];
+        for (let planning of population) {
+            for (let plan of planning.planList) {
+                if (!plan) continue;
+                if (plan.user && plan.task) {
+                    if (!control[plan.user.code]) {
+                        plan.hour = 0;
+                        control[plan.user.code] = plan.task.workload;
+                    }
+                    else {
+                        plan.hour = control[plan.user.code];
+                        control[plan.user.code] += plan.task.workload;
+                    }
+                }
+            }
+        }
     }
 };

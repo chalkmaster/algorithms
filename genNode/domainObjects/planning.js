@@ -8,6 +8,7 @@ module.exports = class Planning {
     constructor(planList) {
         this.planList = planList;
         this.fitness = 0;
+        this.id = 0;
     }
 
     /**
@@ -17,8 +18,13 @@ module.exports = class Planning {
         let totalFitness = 0;
 
         for (let plan of this.planList) {
+            if (!plan) continue;
+            
             const concurrentPlans = this.planList.filter((p) => {
                 let result = false;
+                if (!p || p.id == plan.id)
+                    return false;
+                
                 if (p.hour >= plan.hour && p.hour < (plan.hour + (plan.task ? plan.task.workload : 0))) {
                     if (plan.user && p.user)
                         if (p.user.code == plan.user.code)

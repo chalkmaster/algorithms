@@ -14,6 +14,7 @@ module.exports = class plan {
      * @param {Tool} planTool ferramenta planejada para uso
      */
     constructor(planTask, planUser = null, planTool = null) {
+        this.id = '';
         this.fitness = 0;
         this.hour = 0;
         this.task = planTask;
@@ -79,7 +80,7 @@ module.exports = class plan {
         }
 
 
-        this.fitness = 345 - penaltySum;
+        this.fitness = 145 - penaltySum;
         this.reason = this.getReason();
         return this.fitness;
     }
