@@ -36,9 +36,10 @@ module.exports = class plan {
     /**
      * O quão saldável é o indivíduo
      */
-    computeFitness() {
+    computeFitness(config) {
         const delayPenalty = 30;
         const lowCriticalityPenalty = 15;
+        const workloadPenalty = 100;
         const invalidUserPenalty = 100;
         const invalidTaskPenalty = 100;
         const invalidToolPenalty = 100;
@@ -48,6 +49,12 @@ module.exports = class plan {
         if (!this.user) {
             penaltySum += invalidUserPenalty;
             this.penaltyReasons += 2;
+        } else {
+            const totalHours = config.workingDays * config.workingHours;
+            if (totalHours < this.user.getTotalWorkload()){
+                penaltySum += workloadPenalty;
+                this.penaltyReasons += 4;
+            }
         }
 
         if (this.task) {
@@ -57,7 +64,6 @@ module.exports = class plan {
                 this.penaltyReasons += 1;
 
             penaltySum += delayPenalty - delayFault;
-            this.penaltyReasons += 4;
 
             if (this.task.criticality === criticalityKind.HIGH)
                 this.penaltyReasons += 8;
@@ -80,7 +86,7 @@ module.exports = class plan {
         }
 
 
-        this.fitness = 145 - penaltySum;
+        this.fitness = 155 - penaltySum;
         this.reason = this.getReason();
         return this.fitness;
     }
@@ -92,6 +98,8 @@ module.exports = class plan {
         //usuario
         if ((this.penaltyReasons & 2) == 2)
             response += `não encontrou um usuário disponível para realizar a demanda `;
+        else if ((this.penaltyReasons & 4) == 4)
+            response += `alocou a tarefa para um usuário porém ele está sobrecarregado para realizá-la `;
         else if ((this.penaltyReasons & 64) == 64)
             response += `possui um usuário sem tarefa para realizar `;
         else if ((this.penaltyReasons & 128) == 128)

@@ -27,11 +27,11 @@ module.exports = class genService {
         this.config = {
             workingDays: 3,
             workingHours: 8,
-            populationSize: 100,
+            populationSize: 10,
             maxGenerations: 100,
-            elitism: 0.4,
-            crossover: 0.1,
-            mutation: 0.1,
+            elitism: 0.1,
+            crossover: 0.7,
+            mutation: 0.01,
         };
         this.geneticFactory = new GeneticFactory(this.config);
     }
@@ -134,6 +134,9 @@ module.exports = class genService {
             decent1.id = i + decents.length;
             decent2.id = decent1.id + 1;
 
+            decent1.computeFitness(this.config);
+            decent2.computeFitness(this.config);            
+
             decents.push(decent1);
             decents.push(decent2);
         }
@@ -150,7 +153,7 @@ module.exports = class genService {
         let roulet = generation.population.map((p, i) => { return { index: i, probability: p.fitness / generation.fitness }; })
             .sort((a, b) => { return a.probability > b.probability ? 1 : -1; });
 
-        roulet.splice(0, roulet.length / 2);
+        roulet.splice(0, roulet.length * 0.6);
 
         roulet.forEach((value, index) => {
             value.probability = Math.ceil(value.probability * 100);
@@ -194,15 +197,16 @@ module.exports = class genService {
 
         do {
             pos1 = mathHelper.getRandomInt(0, planning.planList.length - 1);
-        } while(!planning.planList[pos1]);
+        } while (!planning.planList[pos1] || !planning.planList[pos1].user || !planning.planList[pos1].task);
 
         do {
             pos2 = mathHelper.getRandomInt(0, planning.planList.length - 1);
-        } while (!planning.planList[pos2] || pos2 == pos1);
+        } while (!planning.planList[pos2] || pos2 == pos1 || (planning.planList[pos2].user && planning.planList[pos2].user.code != planning.planList[pos1].user.code));
 
-        let temp = planning.planList[pos1].hour;
-        planning.planList[pos1].hour = planning.planList[pos2].hour;
-        planning.planList[pos2].hour = temp;
+        let temp = planning.planList[pos1];
+        planning.planList[pos1] = planning.planList[pos2];
+        planning.planList[pos2] = temp;
+        //planning.adjustStartHourForAllPlans();
     }
 
     /**
@@ -215,33 +219,39 @@ module.exports = class genService {
         const toolOrTask = mathHelper.getRandomInt(0, 9) % 2;
 
         let planIndex = 0;
-        do { 
+        do {
             planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
-        } while(!planning.planList[planIndex])
+        } while (!planning.planList[planIndex]);
 
-        if (toolOrTask == 1) {
-            while (!planning.planList[planIndex] || !planning.planList[planIndex].task)
-                planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
+        while (!planning.planList[planIndex] || !planning.planList[planIndex].user)
+            planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
 
-            const possibleTools = resources.getToolsByType(planning.planList[planIndex].task.requiredTool);
+        const plannedTasks = planning.planList[planIndex].user.tasks.map((val) => { return { code: val.code }; });
 
-            if (possibleTools && possibleTools.length > 0) {
-                const i = mathHelper.getRandomInt(0, possibleTools.length - 1);
-                planning.planList[planIndex].tool = possibleTools[i];
+        const possibleTasks = resources.getTasksByUserSkills(planning.planList[planIndex].user, plannedTasks)
+            .concat(resources.getTasksWithoutRequiredSkill(plannedTasks));
+
+        if (possibleTasks && possibleTasks.length > 0) {
+            const taskIndex = mathHelper.getRandomInt(0, possibleTasks.length - 1);
+
+            const toClear = planning.planList.find((plan) => { return plan && plan.task && plan.task.code == possibleTasks[taskIndex].code; });
+            if (toClear && toClear.user) {
+                const idx = toClear.user.tasks.findIndex((task) => { return task.code == toClear.task.code; });
+                toClear.user.tasks.splice(idx, 1);
+                toClear.task.user = null;
+                toClear.task = null;
+                toClear.computeFitness(this.config);
             }
-        } else {
-            while (!planning.planList[planIndex] || !planning.planList[planIndex].user)
-                planIndex = mathHelper.getRandomInt(0, planning.planList.length - 1);
 
-            const possibleTasks = resources.getTasksByUserSkills(planning.planList[planIndex].user)
-                .concat(resources.getTasksWithoutRequiredSkill(8));
-
-            if (possibleTasks && possibleTasks.length > 0) {
-                const taskIndex = mathHelper.getRandomInt(0, possibleTasks.length - 1);
-                planning.planList[planIndex].task = possibleTasks[taskIndex];
+            planning.planList[planIndex].task = possibleTasks[taskIndex];
+            if (planning.planList[planIndex].user.tasks && planning.planList[planIndex].user.tasks.length > 0) {
+                planning.planList[planIndex].user.tasks[0].user = null;
+                planning.planList[planIndex].user.tasks.shift();
             }
+            planning.planList[planIndex].user.attachTask(planning.planList[planIndex].task);
+            planning.planList[planIndex].task.attachUser(planning.planList[planIndex].user);
+            planning.planList[planIndex].computeFitness(this.config);
         }
-        planning.planList[planIndex].computeFitness();
     }
 
     /**
@@ -250,8 +260,8 @@ module.exports = class genService {
      */
     adjustTime(population) {
         let totalHours = this.config.workingDays * this.config.workingHours;
-        let control = [];
         for (let planning of population) {
+            let control = [];
             for (let plan of planning.planList) {
                 if (!plan) continue;
                 if (plan.user && plan.task) {

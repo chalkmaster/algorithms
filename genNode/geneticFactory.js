@@ -19,32 +19,29 @@ module.exports = class GeneticFactory {
     getResources() {
         return this.resources;
     }
+    reset(){
+        this.resources = new resourceService();
+    }
 
     /**
      * Cria uma planejamento válido para o período
      */
     buildPlanning() {
+        this.reset();
         const resources = this.getResources();
 
         let planList = [];
+        let planedTasks = [];        
         let totalHours = this.config.workingDays * this.config.workingHours;
-        
-        //FIX Só pra poc
-        resources.users = [];
-        resources.initializeUsers();
-        resources.getTasks().forEach((t) => {t.user = null;});
-        //FIX Só pra poc
-
 
         for (let hour = 0; hour < totalHours; hour++) {
-            for (let user of resources.users) {
-                let userPlan = this.buildValidPlanForUser(user);
-                if (!userPlan)
-                    userPlan = new Plan(null, user, null);
-
+            for (let user of resources.getUsers()) {                
+                if (user.getTotalWorkload() > totalHours)
+                    continue;                
+                let userPlan = this.buildValidPlanForUser(user, planedTasks);
                 userPlan.id = `U${user.code}${hour}`;
                 userPlan.adjusteHourByPosition(hour);
-                userPlan.computeFitness();
+                userPlan.computeFitness(this.config);
                 planList.push(userPlan);
             }
         }
@@ -54,12 +51,11 @@ module.exports = class GeneticFactory {
             let notPlanedPlan = new Plan(task);
             notPlanedPlan.id = `T${task.code}`;
             notPlanedPlan.adjusteHourByPosition(totalHours);
-            notPlanedPlan.computeFitness();
+            notPlanedPlan.computeFitness(this.config);
             planList.push(notPlanedPlan);
         }
 
-        //FIX: Não precisa pra versão final, só pra ajudar na hora de analisar na tela
-        let planning = new Planning(planList.sort((a, b) => { return a.fitness < b.fitness ? 1 : -1; }));
+        let planning = new Planning(planList);
         planning.computeFitness();
         return planning;
     }
@@ -68,13 +64,12 @@ module.exports = class GeneticFactory {
      * Inicializa um plano válido para o usuário
      * @param {User} planUser
      */
-    buildValidPlanForUser(planUser) {
+    buildValidPlanForUser(planUser, planedTasks) {
         if (!planUser)
             return;
 
         const resources = this.getResources();
 
-        let planedTasks = [];
         let planTool = null;
         let planTask = null;
 
@@ -85,7 +80,7 @@ module.exports = class GeneticFactory {
             planTask = tasksThatRequireUserSkills[drawnNumber];
         } else {
 
-            const tasksWithoutRequiredSkill = resources.getTasksWithoutRequiredSkill(planUser.getRemaningWorkCapacity() + 2, planedTasks);
+            const tasksWithoutRequiredSkill = resources.getTasksWithoutRequiredSkill(planedTasks);
 
             if (tasksWithoutRequiredSkill && tasksWithoutRequiredSkill.length > 0) {
                 const drawnNumber = mathHelper.getRandomInt(0, tasksWithoutRequiredSkill.length - 1);
@@ -94,6 +89,8 @@ module.exports = class GeneticFactory {
         }
 
         if (planTask) {
+            planedTasks.push(planTask.code);
+
             planUser.attachTask(planTask);
             planTask.attachUser(planUser);
 
@@ -104,7 +101,6 @@ module.exports = class GeneticFactory {
                 planTool = possibleTools[drawn];
             }
 
-            planedTasks.push(planTask.code);
         }
 
         return new Plan(planTask, planUser, planTool);

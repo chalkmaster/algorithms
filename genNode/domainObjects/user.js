@@ -7,8 +7,8 @@ module.exports = class User {
      * @param {string} code código do usuário
      * @param {number} workCapacity capacidade de trabalho em horas
      * @param {string} location localização atendida
-     * @param {skillKind} skills habilidades de manutenção
-     * @param {Task} tasks taregas alocadas
+     * @param {skillKind[]} skills habilidades de manutenção
+     * @param {Task[]} tasks taregas alocadas
      */
     constructor(code, workCapacity, location, skills = [], tasks = []) {
         this.code = code;
@@ -26,6 +26,13 @@ module.exports = class User {
         let total = this.workCapacity;
         for(let task of this.tasks)
             total -= task.workload;
+        return total;
+    }
+
+    getTotalWorkload(){
+        let total = 0;
+        for(let task of this.tasks)
+            total += task.workload;
         return total;
     }
 
