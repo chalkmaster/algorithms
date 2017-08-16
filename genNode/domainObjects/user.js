@@ -29,12 +29,6 @@ module.exports = class User {
         return total;
     }
 
-    getTotalWorkload(){
-        let total = 0;
-        for(let task of this.tasks)
-            total += task.workload;
-        return total;
-    }
 
     /**
      * Atribui a tarefa ao usuário
@@ -44,5 +38,14 @@ module.exports = class User {
         if (!task) return;
         this.tasks.push(task);
     }
-    
+
+    /**
+     * Retorna o total de trabalho alocado para o usuário
+     */
+    getTotalWorkload(){
+        let total = 0;
+        for(let task of this.tasks)
+            total += task.workload;
+        return total;
+    }
 };

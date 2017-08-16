@@ -27,7 +27,7 @@ module.exports = class genService {
         this.config = {
             workingDays: 3,
             workingHours: 8,
-            populationSize: 10,
+            populationSize: 100,
             maxGenerations: 100,
             elitism: 0.1,
             crossover: 0.7,
