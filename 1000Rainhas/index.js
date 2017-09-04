@@ -26,8 +26,10 @@ function print() {
     let output = '';
     for (let left = leftBoundary; left < rightBoundary; left++) {
         for (let top = topBoundary; top < bottomBoundary; top++) {
-            if (emptyFields.indexOf(`${top}x${left}`) == -1)
-                output += "[ x ] ";
+            if (queens.indexOf(`${top}x${left}`) != -1)
+                output += '[ Q ] ';
+            else if (emptyFields.indexOf(`${top}x${left}`) == -1)
+                output += '[ x ] ';
             else
                 output += `[${top}x${left}] `;
         }
@@ -39,53 +41,70 @@ function print() {
 function clear(queenTop, queenLeft) {
     //limpa da esquerda pra direita
     for (let left = leftBoundary; left < rightBoundary; left++) {
-        emptyFields.splice(emptyFields.indexOf(`${queenTop}x${left}`),1);
+        emptyFields.splice(emptyFields.indexOf(`${queenTop}x${left}`), 1);
     }
     //limpa de cima em baixo
     for (let top = topBoundary; top < bottomBoundary; top++) {
         const index = emptyFields.indexOf(`${top}x${queenLeft}`);
         if (index > -1)
-            emptyFields.splice(index,1);
+            emptyFields.splice(index, 1);
     }
     //limpa diagonal esquerda
     let top = queenTop;
     let left = queenLeft;
-    for (;left >= leftBoundary && top >= topBoundary;) {
+    for (; left >= leftBoundary && top >= topBoundary;) {
         const index = emptyFields.indexOf(`${top}x${left}`);
         if (index > -1)
-            emptyFields.splice(index,1);
+            emptyFields.splice(index, 1);
         top--;
         left--;
     }
     top = queenTop;
     left = queenLeft;
-    for (;left <= rightBoundary && top <= bottomBoundary;) {
+    for (; left <= rightBoundary && top <= bottomBoundary;) {
         const index = emptyFields.indexOf(`${top}x${left}`);
         if (index > -1)
-            emptyFields.splice(index,1);
+            emptyFields.splice(index, 1);
         top++;
         left++;
     }
     top = queenTop;
     left = queenLeft;
-    for (;left >= leftBoundary && top >= topBoundary;) {
+    for (; left >= leftBoundary && top >= topBoundary;) {
         const index = emptyFields.indexOf(`${top}x${left}`);
         if (index > -1)
-            emptyFields.splice(index,1);
+            emptyFields.splice(index, 1);
         top--;
         left++;
     }
     top = queenTop;
     left = queenLeft;
-    for (;left <= rightBoundary && top <= bottomBoundary;) {
+    for (; left <= rightBoundary && top <= bottomBoundary;) {
         const index = emptyFields.indexOf(`${top}x${left}`);
         if (index > -1)
-            emptyFields.splice(index,1);
+            emptyFields.splice(index, 1);
         top++;
         left--;
     }
 }
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 initializeFields();
 print();
-clear(4,4);
-print();
+
+while (queens.length < countOfQueens) {
+    if (emptyFields.length === 0) {
+        console.log("error, no field to put queen - " + queens.length);
+        print();
+        break;
+    }
+    let pos = getRandomInt(0, emptyFields.length - 1);
+    let field = emptyFields[pos];
+    queens.push(field);
+    let top = parseInt(field.split("x")[0]);
+    let left = parseInt(field.split("x")[1]);
+    clear(top, left);
+    print();
+}
