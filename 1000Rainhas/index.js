@@ -27,38 +27,65 @@ function print() {
     for (let left = leftBoundary; left < rightBoundary; left++) {
         for (let top = topBoundary; top < bottomBoundary; top++) {
             if (emptyFields.indexOf(`${top}x${left}`) == -1)
-                output += "x";
+                output += "[ x ] ";
             else
-                output += "0";
+                output += `[${top}x${left}] `;
         }
         output += "\n";
     }
     console.log(output);
 }
 
-function clear(ctop, cleft) {
-    emptyFields.splice(emptyFields.indexOf(`${ctop}x${cleft}`));
-
-    for (let left = cleft; left < rightBoundary; left++) {
-        const top = ctop;
-        emptyFields.splice(emptyFields.indexOf(`${top}x${left}`));
+function clear(queenTop, queenLeft) {
+    //limpa da esquerda pra direita
+    for (let left = leftBoundary; left < rightBoundary; left++) {
+        emptyFields.splice(emptyFields.indexOf(`${queenTop}x${left}`),1);
     }
-    for (let top = ctop; top < bottomBoundary; top++) {
-        const left = cleft;
-        emptyFields.splice(emptyFields.indexOf(`${top}x${left}`));
+    //limpa de cima em baixo
+    for (let top = topBoundary; top < bottomBoundary; top++) {
+        const index = emptyFields.indexOf(`${top}x${queenLeft}`);
+        if (index > -1)
+            emptyFields.splice(index,1);
     }
-    for (let left = cleft; left < rightBoundary; left++) {
-        const top = ctop;
-        emptyFields.splice(emptyFields.indexOf(`${top}x${left}`));
+    //limpa diagonal esquerda
+    let top = queenTop;
+    let left = queenLeft;
+    for (;left >= leftBoundary && top >= topBoundary;) {
+        const index = emptyFields.indexOf(`${top}x${left}`);
+        if (index > -1)
+            emptyFields.splice(index,1);
+        top--;
+        left--;
     }
-    for (let top = ctop; top > topBoundary; top--) {
-        const left = cleft;
-        emptyFields.splice(emptyFields.indexOf(`${top}x${left}`));
+    top = queenTop;
+    left = queenLeft;
+    for (;left <= rightBoundary && top <= bottomBoundary;) {
+        const index = emptyFields.indexOf(`${top}x${left}`);
+        if (index > -1)
+            emptyFields.splice(index,1);
+        top++;
+        left++;
     }
-    for (let left = cleft; left < rightBoundary; left++) {
-        const top = ctop;
-        emptyFields.splice(emptyFields.indexOf(`${top}x${left}`));
+    top = queenTop;
+    left = queenLeft;
+    for (;left >= leftBoundary && top >= topBoundary;) {
+        const index = emptyFields.indexOf(`${top}x${left}`);
+        if (index > -1)
+            emptyFields.splice(index,1);
+        top--;
+        left++;
+    }
+    top = queenTop;
+    left = queenLeft;
+    for (;left <= rightBoundary && top <= bottomBoundary;) {
+        const index = emptyFields.indexOf(`${top}x${left}`);
+        if (index > -1)
+            emptyFields.splice(index,1);
+        top++;
+        left--;
     }
 }
 initializeFields();
+print();
+clear(4,4);
 print();
