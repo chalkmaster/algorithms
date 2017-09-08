@@ -1,9 +1,12 @@
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 const problemSize = 8;
 const board = {};
 
 function initializeBoard() {
     for (let col = 0; col < problemSize; col++) {
-        board[col] = {};
+        board[col] = {e:[]};
         for (let row = 0; row < problemSize; row++) {
             board[col][row] = "[ ]";
         }
@@ -22,30 +25,68 @@ function print(){
 function blockFiledsFor(row, col){
     let ldCol = 0;
     let ldRow = 0;
-    let rdCol = problemSize - 1;
-    let rdRow = problemSize - 1;
+    let rdCol = 0;
+    let rdRow = 0;
 
-    if (row > col){
-        ldRow = row - col;
-        rdRow -= ldRow;
+    if (row + col + 1 > problemSize){
+        rdCol = problemSize - 1;
+        rdRow = row - (problemSize - col - 1);
     }
     else {
-        ldCol = col - row;
-        rdCol -= ldCol;
+        rdCol = col + row;
     }
-
+    if (row > col){
+        ldRow = row - col;
+    } else {
+        ldCol = col - row;
+    }
+    
     for (let i = 0; i < problemSize; i++) {
-        board[i][row] = "[•]";
-        board[col][i] = "[•]";
-        board[ldCol++][ldRow++] = "[•]";
-        board[rdCol--][rdRow--] = "[•]";        
+        board[i][row] = board[i][row] == "[Q]" ? "[Q]" : "[•]";
+        board[col][i] = board[col][i] == "[Q]" ? "[Q]" : "[•]";
+        if(ldCol < problemSize && ldRow < problemSize)
+            board[ldCol++][ldRow++]= board[ldCol-1][ldRow-1] ==  "[Q]" ? "[Q]" : "[•]";
+        
+        if(rdCol >= 0 && rdRow < problemSize)
+             board[rdCol--][rdRow++] = board[rdCol+1][rdRow-1] == "[Q]" ? "[Q]" : "[•]";        
     }
     board[col][row] = "[Q]";
 }
 initializeBoard();
-blockFiledsFor(4,4);
-print();
-//----------------
+const run = (problemSize/2);
+let col = 0;
+let row = 0;
+while(col < run){
+    while (board[col][row] != '[ ]' && row < problemSize)
+        row++;
+    
+    if (row < problemSize)
+        blockFiledsFor(row,col);
+    col++;
+    row++;
+    row++;    
+    print();
+}
+console.log('end');
+// const run = problemSize/2;
+// let q = 0;
+// while(q <= run+1){
+//     let pos = 0;
+
+//     while (board[q][pos] != '[ ]' && pos < problemSize)
+//         pos++;
+    
+//     if (pos < problemSize)
+//         blockFiledsFor(pos,q);
+
+//     pos = problemSize -1;
+//     while (board[problemSize - 1 - q][pos] != '[ ]')
+//         pos--;
+
+//     blockFiledsFor(pos,problemSize - 1 - q);    
+//     q++;
+//     print();
+// }
 
 // const topBoundary = 0;
 // const bottomBoundary = 8;
@@ -126,9 +167,6 @@ print();
 //         top++;
 //         left--;
 //     }
-// }
-// function getRandomInt(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
 // }
 
 // initializeFields();
