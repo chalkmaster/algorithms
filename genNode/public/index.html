@@ -1,5 +1,62 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <h1>Hello Nurse!</h1>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vesttro GenScheduling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Vesttro AI - Genetic Scheduling
+                </h1>
+                <h2 class="subtitle">
+                    Genetic Test Console
+                </h2>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="notification has-text-centered">
+            <h3>Click run to execute the code</h3>
+            <button class="button is-link" onclick="run()">RUN</button>
+            <button class="button is-link is-warning" onclick="results()">SHOW LAST RESULT</button>
+            <button id="btnLog" class="button is-link is-success" disabled="disabled" onclick="showLog()">VIEW LOG</button>
+        </div>
+        <h4 id="info" class="is-info">&nbsp;</h4>
+        <progress id="pb" class="progress is-primary" value="0" max="100"></progress>
+
+        <div class="container" id="clog" style="display: none">
+            <button id="btnLog" class="button is-link is-danger" onclick="hideLog()">HIDE LOG</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>info</td>
+                    </tr>
+                </thead>
+                <tbody id="tLog"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container"><p>&nbsp;</p></div>
+    <div class="container">
+        <div id="results" class="columns"></div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Genetic Schedulling</strong> by <a href="https://sigga.com">Sigga Technologies</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>

@@ -14,10 +14,13 @@ class Generation {
         this.computeFitness();
     }
     computeFitness() {
-        let totalFitness = 0;
-        for (let planning of this.population)
-            totalFitness += planning.fitness;
-        this.fitness = totalFitness;
+        // let totalFitness = 0;
+        // for (let planning of this.population)
+        //     totalFitness += planning.fitness;
+        // this.fitness = totalFitness;
+        // return this.fitness;
+        this.bestIndividual = this.population[0];
+        this.fitness = this.bestIndividual.fitness;
         return this.fitness;
     }
 }
@@ -78,6 +81,7 @@ module.exports = class genService {
      * @param {Generation} generation 
      */
     makeCrossOver(generation) {
+        this.rouletCache = null;
         let decents = [];
 
         const elit = Math.ceil(this.config.populationSize * this.config.elitism);
@@ -150,18 +154,29 @@ module.exports = class genService {
      * @returns {Planning}
      */
     rouletSelection(generation) {
-        let roulet = generation.population.map((p, i) => { return { index: i, probability: p.fitness / generation.fitness }; })
-            .sort((a, b) => { return a.probability > b.probability ? 1 : -1; });
+        // let roulet = generation.population.map((p, i) => { return { index: i, probability: p.fitness / generation.fitness }; })
+        //     .sort((a, b) => { return a.probability > b.probability ? 1 : -1; });
 
-        roulet.splice(0, roulet.length * 0.6);
+        // roulet.splice(0, roulet.length * 0.6);
 
-        roulet.forEach((value, index) => {
-            value.probability = Math.ceil(value.probability * 100);
-            value.probability += value.probability * (index * index);
-        });
+        // roulet.forEach((value, index) => {
+        //     value.probability = Math.ceil(value.probability * 100);
+        //     value.probability += value.probability * (index * index);
+        // });
 
-        const drawnNumber = mathHelper.getRandomInt(0, roulet[roulet.length - 1].probability - 1);
-        const selected = roulet.find((value) => { return value.probability >= drawnNumber; });
+        // const drawnNumber = mathHelper.getRandomInt(0, roulet[roulet.length - 1].probability - 1);
+        // const selected = roulet.find((value) => { return value.probability >= drawnNumber; });
+        // return generation.population[selected.index];        
+        if (!this.rouletCache) {
+            this.rouletCache = generation.population.map((scheduling, i) => {
+                return { index: i, probability: (scheduling.fitness / generation.fitness) * 100 * Math.pow(generation.population.length - i, 2) };
+            }).sort((a, b) => {
+                return a.probability > b.probability ? 1 : -1;
+            });
+        }
+
+        const drawnNumber = mathHelper.getRandomInt(0, this.rouletCache[this.rouletCache.length - 1].probability);
+        const selected = this.rouletCache.find((value) => { return value.probability >= drawnNumber; });
         return generation.population[selected.index];
     }
 

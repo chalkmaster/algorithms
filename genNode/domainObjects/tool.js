@@ -3,7 +3,7 @@ const toolsKind = require('../domainObjects/toolsKind');
 module.exports = class Tool {
     /**
      * 
-     * @param {String} code 
+     * @param {String} code
      * @param {toolsKind} type 
      */
     constructor(code, type){

@@ -1,22 +1,36 @@
-/**
- * Calcula a diferença de dias entre duas datas.
- * @param {Date} date1 
- * @param {Date} date2 
- */
-function daysDiff(date1, date2){
-    return (date1 - date2) / 36e5;
+class DateHelper {
+    /**
+     * @param {String} sapDate 
+     * @param {String} sapTime 
+     * @returns {Date}
+     */
+    static dateFromSapDate(sapDate = '', sapTime = '') {
+        const normalizedDateString = sapDate.replace('/', '').replace('/', '');
+        let date = eval(`new ${normalizedDateString}`);
+        date = date.toUTC();
+        if (sapTime) {
+            const hours = sapTime.substring(2, 4);
+            const min = sapTime.substring(5, 7);
+            const sec = sapTime.substring(8, 10);
+            date.setHours(hours, min, sec);
+        }
+        return date;
+    }
+
+    static hoursDiffAbs(dateA, dateB) {
+        return Math.abs(dateA - dateB) / 36e5;
+    }
+
+    static minutesDiffAbs(dateA, dateB) {
+        return Math.abs(dateA - dateB) / 6e4;
+    }
+
+    static nextMonday(){
+        var d = new Date();
+        d.setDate(d.getDate() + (1 + 7 - d.getDay()) % 7);
+        d.setHours(0, 0, 0, 0);
+        return d;
+    }
 }
 
-/**
- * Calcula a diferença de dias entre duas datas e retorna o valor absoluto da diferença
- * @param {Date} date1 
- * @param {Date} date2 
- */
-function daysDiffAbs(date1, date2){
-    return Math.abs((date1 - date2) / 36e5);
-}
-
-module.exports = {
-    daysDiff,
-    daysDiffAbs,
-};
+module.exports =  DateHelper;
